@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import jdk.internal.org.jline.terminal.TerminalBuilder.SystemOutput;
+
 public class Interfaz {
 
 	private JFrame frame;
@@ -29,6 +31,7 @@ public class Interfaz {
 	 */
 	public Interfaz() {
 		initialize();
+		System.out.println("Hola mundo");
 	}
 
 	/**
