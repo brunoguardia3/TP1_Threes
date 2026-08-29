@@ -2,10 +2,17 @@ package resources;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import java.awt.BorderLayout;
 
-public class Interfaz extends Jframe{
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+public class Interfaz extends JFrame{
 
 	 private JPanel contentPane;
     private JPanel panelGrilla;
