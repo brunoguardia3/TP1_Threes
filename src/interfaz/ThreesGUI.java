@@ -1,12 +1,14 @@
 package interfaz;
 
-import Juego.Model;
 import java.awt.EventQueue;
 
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import juego.Model;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -14,7 +16,7 @@ import java.awt.BorderLayout;
 
 import java.awt.Color;
 
-@SuppressWarnings("serial") // La declaración de la clase agregaba un warning del tipo serialID, por lo que suprimimosq el warning sin ensuciar el código principal
+@SuppressWarnings("serial") // La declaración de la clase agregaba un warning del tipo serialID, por lo que suprimimos el warning sin ensuciar el código principal
 public class ThreesGUI extends JFrame{
 	 private JPanel contentPane;
     private JPanel panelGrilla;
