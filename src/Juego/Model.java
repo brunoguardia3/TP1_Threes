@@ -1,4 +1,4 @@
-package resources;
+package Juego;
 
 public class Model {
 

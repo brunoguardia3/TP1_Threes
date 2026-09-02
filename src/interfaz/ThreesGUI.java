@@ -1,5 +1,6 @@
-package resources;
+package interfaz;
 
+import Juego.Model;
 import java.awt.EventQueue;
 
 
@@ -10,10 +11,11 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 
-public class Interfaz extends JFrame{
-
+@SuppressWarnings("serial") // La declaración de la clase agregaba un warning del tipo serialID, por lo que suprimimosq el warning sin ensuciar el código principal
+public class ThreesGUI extends JFrame{
 	 private JPanel contentPane;
     private JPanel panelGrilla;
     private JLabel[][] casillas;
@@ -30,7 +32,7 @@ public class Interfaz extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Interfaz frame = new Interfaz();
+                    ThreesGUI frame = new ThreesGUI();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -40,7 +42,7 @@ public class Interfaz extends JFrame{
     }
 
     
-    public Interfaz() {
+    public ThreesGUI() {
         // Configuración básica de la ventana (Respeta el límite de 1366 x 768)
         setTitle("Threes! - Trabajo Práctico");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
