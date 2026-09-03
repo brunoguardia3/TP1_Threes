@@ -1,0 +1,16 @@
+r
+*.war
+
+# Carpetas y configuraciones locales de Eclipse
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+.settings/
+.recommenders/
+
+# Logs y errores del sistema operativo
+*.log
+.DS_Store
+Thumbs.db
