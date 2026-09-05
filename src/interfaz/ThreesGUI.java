@@ -1,6 +1,6 @@
 package interfaz;
 
-import Juego.Model;
+import juego.Model;
 import java.awt.EventQueue;
 
 
