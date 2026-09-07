@@ -4,11 +4,15 @@ import java.util.Random;
 
 public class Tablero {
 	private int cantidadDeFichas;
-	private Ficha[][] matriz;
+	private Ficha[][] matrizDeJuego;
 
 	public Tablero() {
+		//Fichas iniciales
+		this.matrizDeJuego[1][1] = new Ficha(1);
+		this.matrizDeJuego[2][2] = new Ficha(2);
+		
 		this.cantidadDeFichas = 2;
-		this.matriz = new Ficha[4][4];
+		this.matrizDeJuego = new Ficha[4][4];
 	}
 	
 	public void moverDerecha() {
@@ -17,11 +21,11 @@ public class Tablero {
 			
 			for(int col = obtenerLargoTablero()-2; col >= 0; col --) {
 				
-				if(matriz[fila][col] != null) {
+				if(matrizDeJuego[fila][col] != null) {
 					
-					if(matriz[fila][col + 1] == null) {
-						matriz[fila][col + 1] = matriz[fila][col];
-						matriz[fila][col] = null;
+					if(matrizDeJuego[fila][col + 1] == null) {
+						matrizDeJuego[fila][col + 1] = matrizDeJuego[fila][col];
+						matrizDeJuego[fila][col] = null;
 					}
 					else {
 						combinarFichas(fila, col, fila, col + 1);
@@ -37,11 +41,11 @@ public class Tablero {
 			
 			for(int col = 1; col < obtenerLargoTablero(); col++) {
 				
-				if(matriz[fila][col] != null) {
+				if(matrizDeJuego[fila][col] != null) {
 					
-					if(matriz[fila][col - 1] == null) {
-						matriz[fila][col - 1] = matriz[fila][col];
-						matriz[fila][col] = null;
+					if(matrizDeJuego[fila][col - 1] == null) {
+						matrizDeJuego[fila][col - 1] = matrizDeJuego[fila][col];
+						matrizDeJuego[fila][col] = null;
 					}
 					else {
 						combinarFichas(fila, col, fila, col - 1);
@@ -57,11 +61,11 @@ public class Tablero {
 			
 			for(int col = 0; col < obtenerLargoTablero(); col++) {
 				
-				if(matriz[fila][col] != null) {
+				if(matrizDeJuego[fila][col] != null) {
 					
-					if(matriz[fila-1][col] == null) {
-						matriz[fila - 1][col] = matriz[fila][col];
-						matriz[fila][col] = null;
+					if(matrizDeJuego[fila-1][col] == null) {
+						matrizDeJuego[fila - 1][col] = matrizDeJuego[fila][col];
+						matrizDeJuego[fila][col] = null;
 					}
 					else {
 						combinarFichas(fila, col, fila - 1, col);
@@ -77,11 +81,11 @@ public class Tablero {
 			
 			for(int col = 0; col < obtenerLargoTablero(); col ++) {
 				
-				if(matriz[fila][col] != null) {
+				if(matrizDeJuego[fila][col] != null) {
 					
-					if (matriz[fila + 1][col] == null) {
-						matriz[fila + 1][col] = matriz[fila][col];
-						matriz[fila][col]= null;
+					if (matrizDeJuego[fila + 1][col] == null) {
+						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
+						matrizDeJuego[fila][col]= null;
 					}
 					else {
 						combinarFichas(fila, col, fila + 1, col);
@@ -93,7 +97,7 @@ public class Tablero {
 	
 	private boolean validarSiHayBorde(int fila, int columna, String direccion) {
 		//traemos el largo de fila y columna
-		int maximoMatriz = matriz.length - 1;
+		int maximoMatriz = matrizDeJuego.length - 1;
 		
 		if(direccion.equals("arriba") && fila == 0) {
 			return true;
@@ -113,11 +117,11 @@ public class Tablero {
 	}
 	
 	public int obtenerLargoTablero() {
-		return matriz.length;
+		return matrizDeJuego.length;
 	}
 	
 	public boolean posicionLibre(int nFila, int nCol) {
-		if(matriz[nFila][nCol] == null) {
+		if(matrizDeJuego[nFila][nCol] == null) {
 			return true;
 		}else {
 			return false;
@@ -126,21 +130,21 @@ public class Tablero {
 	
 	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int  filaFichaDestino, int columFichaDestino) {
 		//usamos las coordenadas de los parametros para saber el valor de las fichas
-		Ficha fichaOrigen = matriz[filaFichaOrigen][columFichaOrigen];
-		Ficha fichaDestino = matriz[filaFichaDestino][columFichaDestino];
+		Ficha fichaOrigen = matrizDeJuego[filaFichaOrigen][columFichaOrigen];
+		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
 		
 		if(sePuedeFusionar(fichaDestino, fichaOrigen)) {
 			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
 			fichaDestino.setValor(nuevoValorFicha);
 			
-			matriz[filaFichaOrigen][columFichaOrigen] = null;
+			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
 			
 			this.cantidadDeFichas--;
 		}
 	}
 	
 	public Ficha obtenerFicha(int i, int j) {
-		return matriz[i][j];
+		return matrizDeJuego[i][j];
 	}
 	
 	public int cantidadDeFichasPresentes() {
@@ -161,7 +165,7 @@ public class Tablero {
 	        // Se Busca celdas vacías en el borde contrario al movimiento
 	        if (direccion.equals("derecha")) {
 	            for (int fila = 0; fila <= borde; fila++) {
-	                if (matriz[fila][0] == null) {
+	                if (matrizDeJuego[fila][0] == null) {
 	                    posFilasVacias[cantCeldasVacias] = fila;
 	                    posColumnasVacias[cantCeldasVacias] = 0;
 	                    cantCeldasVacias++;
@@ -170,7 +174,7 @@ public class Tablero {
 	        } 
 	        else if (direccion.equals("izquierda")) {
 	            for (int fila = 0; fila <= borde; fila++) {
-	                if (matriz[fila][borde] == null) {
+	                if (matrizDeJuego[fila][borde] == null) {
 	                    posFilasVacias[cantCeldasVacias] = fila;
 	                    posColumnasVacias[cantCeldasVacias] = borde;
 	                    cantCeldasVacias++;
@@ -179,7 +183,7 @@ public class Tablero {
 	        } 
 	        else if (direccion.equals("arriba")) {
 	            for (int col = 0; col <= borde; col++) {
-	                if (matriz[borde][col] == null) {
+	                if (matrizDeJuego[borde][col] == null) {
 	                    posFilasVacias[cantCeldasVacias] = borde;
 	                    posColumnasVacias[cantCeldasVacias] = col;
 	                    cantCeldasVacias++;
@@ -188,7 +192,7 @@ public class Tablero {
 	        } 
 	        else if (direccion.equals("abajo")) {
 	            for (int col = 0; col <= borde; col++) {
-	                if (matriz[0][col] == null) {
+	                if (matrizDeJuego[0][col] == null) {
 	                    posFilasVacias[cantCeldasVacias] = 0;
 	                    posColumnasVacias[cantCeldasVacias] = col;
 	                    cantCeldasVacias++;
@@ -204,7 +208,7 @@ public class Tablero {
 	            int columnaNuevaFicha = posColumnasVacias[indiceRandom];
 	            
 	            // Se coloca nueva ficha en la nueva posicion con el siguiente valor 
-	            matriz[filaNuevaFicha][columnaNuevaFicha] = new Ficha(siguienteValor);
+	            matrizDeJuego[filaNuevaFicha][columnaNuevaFicha] = new Ficha(siguienteValor);
 	            
 	            this.cantidadDeFichas++;
 	        }

@@ -10,19 +10,20 @@ public class Model {
 	private int siguienteValor;
 	
 	public Model() {
-		this.siguienteValor = generarFichaAleatoria();
+		this.siguienteValor = generarNumeroAleatoria();
 	}
 	
-	public int generarFichaAleatoria() {
+	//Ese metodo genera un numero aleatorio de 1 a 3 para las nuevas fichas
+	public int generarNumeroAleatoria() {
 		Random random = new Random();
 		
 		int[] posiblesValoresFichas = {1,2,3};
 		
 		int indice = random.nextInt(posiblesValoresFichas.length);
 		
-		int fichaAleatoria = posiblesValoresFichas[indice];
+		int nroAleatoria = posiblesValoresFichas[indice];
 		
-		return fichaAleatoria;
+		return nroAleatoria;
 	}
 	
 	public int getSiguientValor() {
