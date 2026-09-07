@@ -6,25 +6,40 @@ public class Model {
 	Tablero tablero = new Tablero();
 	int puntuación = 0;
 	boolean juegoTerminado = false;
-	
+
 	private int siguienteValor;
-	
+
 	public Model() {
 		this.siguienteValor = generarFichaAleatoria();
+	}
+	public void moverDerecha() {
+		tablero.moverDerecha();
+	} 
+	
+	public void moverIzquierda() {
+		tablero.moverIzquierda();
+	}
+	
+	public void moverArriba() {
+		tablero.moverArriba();
+	}
+	
+	public void moverAbajo() {
+		tablero.moverAbajo();
 	}
 	
 	public int generarFichaAleatoria() {
 		Random random = new Random();
-		
+
 		int[] posiblesValoresFichas = {1,2,3};
-		
+
 		int indice = random.nextInt(posiblesValoresFichas.length);
-		
+
 		int fichaAleatoria = posiblesValoresFichas[indice];
-		
+
 		return fichaAleatoria;
 	}
-	
+
 	public int getSiguientValor() {
 		return siguienteValor;
 	}
