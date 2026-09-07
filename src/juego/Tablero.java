@@ -149,8 +149,69 @@ public class Tablero {
 
 	
 	public void agregarFicha(String direccion, int siguienteValor) {
-		Random random = new Random();
-	}
+			Random random = new Random();
+	        
+			int[] posFilasVacias = new int[4];
+	        int[] posColumnasVacias = new int[4];
+	        
+	        int cantCeldasVacias = 0; 
+	        
+	        int borde = obtenerLargoTablero() - 1; 
+
+	        // Se Busca celdas vacías en el borde contrario al movimiento
+	        if (direccion.equals("derecha")) {
+	            for (int fila = 0; fila <= borde; fila++) {
+	                if (matriz[fila][0] == null) {
+	                    posFilasVacias[cantCeldasVacias] = fila;
+	                    posColumnasVacias[cantCeldasVacias] = 0;
+	                    cantCeldasVacias++;
+	                }
+	            }
+	        } 
+	        else if (direccion.equals("izquierda")) {
+	            for (int fila = 0; fila <= borde; fila++) {
+	                if (matriz[fila][borde] == null) {
+	                    posFilasVacias[cantCeldasVacias] = fila;
+	                    posColumnasVacias[cantCeldasVacias] = borde;
+	                    cantCeldasVacias++;
+	                }
+	            }
+	        } 
+	        else if (direccion.equals("arriba")) {
+	            for (int col = 0; col <= borde; col++) {
+	                if (matriz[borde][col] == null) {
+	                    posFilasVacias[cantCeldasVacias] = borde;
+	                    posColumnasVacias[cantCeldasVacias] = col;
+	                    cantCeldasVacias++;
+	                }
+	            }
+	        } 
+	        else if (direccion.equals("abajo")) {
+	            for (int col = 0; col <= borde; col++) {
+	                if (matriz[0][col] == null) {
+	                    posFilasVacias[cantCeldasVacias] = 0;
+	                    posColumnasVacias[cantCeldasVacias] = col;
+	                    cantCeldasVacias++;
+	                }
+	            }
+	        }
+
+	        if (cantCeldasVacias > 0) {
+	        	
+	            int indiceRandom = random.nextInt(cantCeldasVacias);
+	            
+	            int filaNuevaFicha = posFilasVacias[indiceRandom];
+	            int columnaNuevaFicha = posColumnasVacias[indiceRandom];
+	            
+	            // Se coloca nueva ficha en la nueva posicion con el siguiente valor 
+	            matriz[filaNuevaFicha][columnaNuevaFicha] = new Ficha(siguienteValor);
+	            
+	            this.cantidadDeFichas++;
+	        }
+	    }
+		
+		
+ 	
 
 	public boolean sePuedeFusionar(Ficha ficha1, Ficha ficha2) {
 		if(ficha1 == null | ficha2 == null) {
