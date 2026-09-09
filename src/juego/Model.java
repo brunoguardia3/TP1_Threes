@@ -9,8 +9,38 @@ public class Model {
 	
 	private int siguienteValor;
 	
+
+
 	public Model() {
 		this.siguienteValor = generarNumeroAleatoria();
+	}
+	
+	public Tablero getTablero() {
+		return tablero;
+	}
+	
+	public void moverDerecha() {
+		tablero.moverDerecha();
+	}
+	
+	public void moverIzquierda() {
+		tablero.moverIzquierda();
+	}
+	
+	public void moverArriba() {
+		tablero.moverArriba();
+	}
+	
+	public void moverAbajo() {
+		tablero.moverAbajo();
+	}
+	
+	public int getPuntuacion() {
+		return puntuación;
+	}
+	
+	public void generarFichaAleatoria() {
+		
 	}
 	
 	//Ese metodo genera un numero aleatorio de 1 a 3 para las nuevas fichas

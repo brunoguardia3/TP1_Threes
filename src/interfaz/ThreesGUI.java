@@ -1,11 +1,12 @@
 package interfaz;
 
 import juego.Model;
+import juego.Ficha;
+import juego.Tablero;
+
 import java.awt.EventQueue;
+import java.util.Iterator;
 
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
 
@@ -19,11 +20,14 @@ public class ThreesGUI extends JFrame{
 	 private JPanel contentPane;
     private JPanel panelGrilla;
     private JLabel[][] casillas;
+    private JFrame frame;
+    private JButton izqButton,derButton,arribaButton,abajoButton;
     
     // Elementos para los objetivos opcionales y estado
     private JLabel lblPuntaje;
     private JLabel lblSiguienteFicha;
     private JLabel lblSugerencia;
+    Model model = new Model();
 
     /**
      * Launch the application. (Solo para probar la interfaz aislada)
@@ -37,12 +41,13 @@ public class ThreesGUI extends JFrame{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                
             }
         });
     }
 
     
-    public ThreesGUI() {
+    public ThreesGUI()  { 
         // Configuración básica de la ventana (Respeta el límite de 1366 x 768)
         setTitle("Threes! - Trabajo Práctico");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,16 +101,56 @@ public class ThreesGUI extends JFrame{
             }
         }
 
-        // --- PANEL INFERIOR: Mensajes / Sugerencias ---
+        JPanel panelInferior = new JPanel();
+        panelInferior.setOpaque(false);
+        panelInferior.setLayout(new BorderLayout(0, 10)); // Separación de 10px vertical
+        contentPane.add(panelInferior, BorderLayout.SOUTH);
+        
+        // 1. Etiqueta de sugerencias (Arriba en el panel inferior)
         lblSugerencia = new JLabel("Sugerencia de jugada: (Ninguna)");
         lblSugerencia.setHorizontalAlignment(SwingConstants.CENTER);
         lblSugerencia.setFont(new Font("Arial", Font.ITALIC, 14));
-        contentPane.add(lblSugerencia, BorderLayout.SOUTH);
+        panelInferior.add(lblSugerencia, BorderLayout.NORTH);
+        
+        // 2. Contenedor para que la botonera no ocupe todo el ancho de la pantalla
+        JPanel contenedorBotonera = new JPanel();
+        contenedorBotonera.setOpaque(false);
+        panelInferior.add(contenedorBotonera, BorderLayout.CENTER);
+        
+        // 3. Panel de la Botonera (Grilla 3x3 para forma de cruceta)
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(3, 3, 5, 5)); // 3 filas, 3 columnas, 5px de gap
+        contenedorBotonera.add(panelBotones);
+        
+        // Inicializar los botones que ya tenías declarados
+        arribaButton = new JButton("↑");
+        izqButton = new JButton("←");
+        derButton = new JButton("→");
+        abajoButton = new JButton("↓");
+        
+        // Fila 1 de la grilla (Vacío, Arriba, Vacío)
+        panelBotones.add(new JLabel(""));
+        panelBotones.add(arribaButton);
+        panelBotones.add(new JLabel(""));
+        
+        // Fila 2 de la grilla (Izquierda, Vacío, Derecha)
+        panelBotones.add(izqButton);
+        panelBotones.add(new JLabel("")); 
+        panelBotones.add(derButton);
+        
+        // Fila 3 de la grilla (Vacío, Abajo, Vacío)
+        panelBotones.add(new JLabel(""));
+        panelBotones.add(abajoButton);
+        panelBotones.add(new JLabel(""));
         
         // Esto es clave para que la ventana pueda detectar los eventos del teclado (las flechas)
         setFocusable(true);
         requestFocusInWindow();
     }
+    
+   
+    
+    
 
     // =========================================================================
     // MÉTODOS PÚBLICOS PARA QUE EL CONTROLADOR ACTUALICE LA VISTA
@@ -122,8 +167,8 @@ public class ThreesGUI extends JFrame{
     /**
      * Actualiza el puntaje en la interfaz.
      */
-    public void actualizarPuntaje(int puntaje) {
-        lblPuntaje.setText("Puntaje: " + puntaje);
+    public void actualizarPuntaje() {
+        lblPuntaje.setText("Puntaje: " + model.getPuntuacion());
     }
     
     /**
@@ -140,5 +185,74 @@ public class ThreesGUI extends JFrame{
         lblSugerencia.setText("Sugerencia de jugada: " + sugerencia);
     }
     
-    
+    public void moverFichaDerecha() {
+    	model.moverDerecha();
+    	generarFicha();
+    	actualizarPantalla();
+    	requestFocusInWindow();
+    	
     }
+    public void moverFichaIzquierda() {
+    	model.moverIzquierda();
+    	generarFicha();
+    	actualizarPantalla();
+    	requestFocusInWindow();
+    	
+    	
+    }
+    public void moverFichaArriba() {
+    	model.moverArriba();
+    	generarFicha();
+    	actualizarPantalla();
+    	requestFocusInWindow();
+    	
+    }
+    public void moverFichaAbajo() {
+    	model.moverAbajo();
+    	generarFicha();
+    	actualizarPantalla();
+    	requestFocusInWindow();
+    	
+    }
+    public void generarFicha() {
+    	model.generarFichaAleatoria();
+    }
+    
+    public void actualizarPantalla() {
+    	Tablero tablero= model.getTablero();
+    	
+    	for(int fila=0;fila<tablero.obtenerLargoTablero();fila++) {
+    		for(int col=0; col < tablero.obtenerLargoTablero();col++) {
+    			Ficha ficha= tablero.obtenerFicha(fila, col);
+    			
+    			int valor=(ficha != null) ? ficha.getValor() : 0;
+    			
+    			String texto = (valor == 0) ? "" : String.valueOf(valor);
+    			Color colorFondo = obtenerColorPorValor(valor);
+    			
+    			actualizarCelda(fila, col, texto, colorFondo);
+    		}
+    	}
+    	actualizarPuntaje();
+    	juegoTerminado();
+    }
+    
+    
+    public void juegoTerminado() { 
+    	 JOptionPane.showMessageDialog(frame, 
+    	            "¡No hay más movimientos posibles!\nTu puntaje final es: " + model.getPuntuacion(), 
+    	            "Juego Terminado", 
+    	            JOptionPane.INFORMATION_MESSAGE);
+    	    }
+    
+    private Color obtenerColorPorValor(int valor) {
+        if (valor == 0) return new Color(200, 200, 200); // Celda vacía (Gris)
+        if (valor == 1) return new Color(102, 204, 255); // Ficha 1 (Celeste)
+        if (valor == 2) return new Color(255, 102, 102); // Ficha 2 (Roja)
+        return Color.WHITE;                              // Fichas 3+ (Blancas)
+    }
+    	
+    }
+    
+    
+    
