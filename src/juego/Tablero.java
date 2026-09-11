@@ -152,8 +152,13 @@ public class Tablero {
 		return this.cantidadDeFichas;
 	}
 
-	
-	public void agregarFicha(String direccion, int siguienteValor) {
+	private void agregarFicha(int fila, int columna, int nuevovalor) {
+		
+		this.matrizDeJuego[fila][columna] = new Ficha(nuevovalor);
+		
+	}
+			
+	public void generarFichaAletoria(String direccion, int siguienteValor) {
 			Random random = new Random();
 	        
 			int[] posFilasVacias = new int[4];
@@ -209,7 +214,8 @@ public class Tablero {
 	            int columnaNuevaFicha = posColumnasVacias[indiceRandom];
 	            
 	            // Se coloca nueva ficha en la nueva posicion con el siguiente valor 
-	            matrizDeJuego[filaNuevaFicha][columnaNuevaFicha] = new Ficha(siguienteValor);
+	            agregarFicha(filaNuevaFicha,columnaNuevaFicha,siguienteValor);
+	            
 	            
 	            this.cantidadDeFichas++;
 	        }
