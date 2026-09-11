@@ -8,239 +8,172 @@ public class Tablero {
 
 	public Tablero() {
 		this.matrizDeJuego = new Ficha[4][4];
-		//Fichas iniciales
+		// Fichas iniciales
 		this.matrizDeJuego[1][1] = new Ficha(1);
 		this.matrizDeJuego[2][2] = new Ficha(2);
-		
+
 		this.cantidadDeFichas = 2;
 		this.matrizDeJuego = new Ficha[4][4];
 	}
-	
+
 	public void moverDerecha() {
-		//recorremos las filas de abajo para arriba y las columnas de derecha a izquierda
-		for(int fila = 0; fila < obtenerLargoTablero(); fila++) {
-			
-			for(int col = obtenerLargoTablero()-2; col >= 0; col --) {
-				
-				if(matrizDeJuego[fila][col] != null) {
-					
-					if(matrizDeJuego[fila][col + 1] == null) {
+		// recorremos las filas de abajo para arriba y las columnas de derecha a
+		// izquierda
+		for (int fila = 0; fila < obtenerLargoTablero(); fila++) {
+
+			for (int col = obtenerLargoTablero() - 2; col >= 0; col--) {
+
+				if (matrizDeJuego[fila][col] != null) {
+
+					if (matrizDeJuego[fila][col + 1] == null) {
 						matrizDeJuego[fila][col + 1] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
-					}
-					else {
+					} else {
 						combinarFichas(fila, col, fila, col + 1);
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void moverIzquierda() {
-		//recorremos las filas de abajo para arriba y las columnas de izquierda a derecha
-		for(int fila = 0; fila < obtenerLargoTablero(); fila++) {
-			
-			for(int col = 1; col < obtenerLargoTablero(); col++) {
-				
-				if(matrizDeJuego[fila][col] != null) {
-					
-					if(matrizDeJuego[fila][col - 1] == null) {
+		// recorremos las filas de abajo para arriba y las columnas de izquierda a
+		// derecha
+		for (int fila = 0; fila < obtenerLargoTablero(); fila++) {
+
+			for (int col = 1; col < obtenerLargoTablero(); col++) {
+
+				if (matrizDeJuego[fila][col] != null) {
+
+					if (matrizDeJuego[fila][col - 1] == null) {
 						matrizDeJuego[fila][col - 1] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
-					}
-					else {
+					} else {
 						combinarFichas(fila, col, fila, col - 1);
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void moverArriba() {
-		//recorremos las filas desde abajo hacia arriba y las columnas desde izquierda a derecha
-		for(int fila = 1; fila < obtenerLargoTablero(); fila++) {
-			
-			for(int col = 0; col < obtenerLargoTablero(); col++) {
-				
-				if(matrizDeJuego[fila][col] != null) {
-					
-					if(matrizDeJuego[fila-1][col] == null) {
+		// recorremos las filas desde abajo hacia arriba y las columnas desde izquierda
+		// a derecha
+		for (int fila = 1; fila < obtenerLargoTablero(); fila++) {
+
+			for (int col = 0; col < obtenerLargoTablero(); col++) {
+
+				if (matrizDeJuego[fila][col] != null) {
+
+					if (matrizDeJuego[fila - 1][col] == null) {
 						matrizDeJuego[fila - 1][col] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
-					}
-					else {
+					} else {
 						combinarFichas(fila, col, fila - 1, col);
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void moverAbajo() {
-		//recorremos las filas desde arriba hacia abajo y las columnas desde izquierda a derecha
-		for(int fila = obtenerLargoTablero() - 2; fila >= 0; fila--) {
-			
-			for(int col = 0; col < obtenerLargoTablero(); col ++) {
-				
-				if(matrizDeJuego[fila][col] != null) {
-					
+		// recorremos las filas desde arriba hacia abajo y las columnas desde izquierda
+		// a derecha
+		for (int fila = obtenerLargoTablero() - 2; fila >= 0; fila--) {
+
+			for (int col = 0; col < obtenerLargoTablero(); col++) {
+
+				if (matrizDeJuego[fila][col] != null) {
+
 					if (matrizDeJuego[fila + 1][col] == null) {
 						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
-						matrizDeJuego[fila][col]= null;
-					}
-					else {
+						matrizDeJuego[fila][col] = null;
+					} else {
 						combinarFichas(fila, col, fila + 1, col);
 					}
 				}
 			}
 		}
 	}
-	
+
 	private boolean validarSiHayBorde(int fila, int columna, String direccion) {
-		//traemos el largo de fila y columna
+		// traemos el largo de fila y columna
 		int maximoMatriz = matrizDeJuego.length - 1;
-		
-		if(direccion.equals("arriba") && fila == 0) {
+
+		if (direccion.equals("arriba") && fila == 0) {
 			return true;
-		}
-		else if(direccion.equals("abajo") && fila == maximoMatriz) {
+		} else if (direccion.equals("abajo") && fila == maximoMatriz) {
 			return true;
-		}
-		else if(direccion.equals("izquierda") && columna == 0) {
+		} else if (direccion.equals("izquierda") && columna == 0) {
 			return true;
-		}
-		else if(direccion.equals("derecha") && columna == maximoMatriz) {
+		} else if (direccion.equals("derecha") && columna == maximoMatriz) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public int obtenerLargoTablero() {
 		return matrizDeJuego.length;
 	}
-	
+
 	public boolean posicionLibre(int nFila, int nCol) {
-		if(matrizDeJuego[nFila][nCol] == null) {
+		if (matrizDeJuego[nFila][nCol] == null) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
-	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int  filaFichaDestino, int columFichaDestino) {
-		//usamos las coordenadas de los parametros para saber el valor de las fichas
+
+	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
+		// usamos las coordenadas de los parametros para saber el valor de las fichas
 		Ficha fichaOrigen = matrizDeJuego[filaFichaOrigen][columFichaOrigen];
 		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
-		
-		if(sePuedeFusionar(fichaDestino, fichaOrigen)) {
+
+		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
 			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
 			fichaDestino.setValor(nuevoValorFicha);
-			
+
 			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
-			
+
 			this.cantidadDeFichas--;
 		}
 	}
-	
+
 	public Ficha obtenerFicha(int i, int j) {
 		return matrizDeJuego[i][j];
 	}
-	
+
 	public int cantidadDeFichasPresentes() {
 		return this.cantidadDeFichas;
 	}
 
-	private void agregarFicha(int fila, int columna, int nuevovalor) {
-		
+	public void agregarFicha(int fila, int columna, int nuevovalor) {
+
 		this.matrizDeJuego[fila][columna] = new Ficha(nuevovalor);
-		
+
 	}
-			
-	public void generarFichaAletoria(String direccion, int siguienteValor) {
-			Random random = new Random();
-	        
-			int[] posFilasVacias = new int[4];
-	        int[] posColumnasVacias = new int[4];
-	        
-	        int cantCeldasVacias = 0; 
-	        
-	        int borde = obtenerLargoTablero() - 1; 
-
-	        // Se Busca celdas vacías en el borde contrario al movimiento
-	        if (direccion.equals("derecha")) {
-	            for (int fila = 0; fila <= borde; fila++) {
-	                if (matrizDeJuego[fila][0] == null) {
-	                    posFilasVacias[cantCeldasVacias] = fila;
-	                    posColumnasVacias[cantCeldasVacias] = 0;
-	                    cantCeldasVacias++;
-	                }
-	            }
-	        } 
-	        else if (direccion.equals("izquierda")) {
-	            for (int fila = 0; fila <= borde; fila++) {
-	                if (matrizDeJuego[fila][borde] == null) {
-	                    posFilasVacias[cantCeldasVacias] = fila;
-	                    posColumnasVacias[cantCeldasVacias] = borde;
-	                    cantCeldasVacias++;
-	                }
-	            }
-	        } 
-	        else if (direccion.equals("arriba")) {
-	            for (int col = 0; col <= borde; col++) {
-	                if (matrizDeJuego[borde][col] == null) {
-	                    posFilasVacias[cantCeldasVacias] = borde;
-	                    posColumnasVacias[cantCeldasVacias] = col;
-	                    cantCeldasVacias++;
-	                }
-	            }
-	        } 
-	        else if (direccion.equals("abajo")) {
-	            for (int col = 0; col <= borde; col++) {
-	                if (matrizDeJuego[0][col] == null) {
-	                    posFilasVacias[cantCeldasVacias] = 0;
-	                    posColumnasVacias[cantCeldasVacias] = col;
-	                    cantCeldasVacias++;
-	                }
-	            }
-	        }
-
-	        if (cantCeldasVacias > 0) {
-	        	
-	            int indiceRandom = random.nextInt(cantCeldasVacias);
-	            
-	            int filaNuevaFicha = posFilasVacias[indiceRandom];
-	            int columnaNuevaFicha = posColumnasVacias[indiceRandom];
-	            
-	            // Se coloca nueva ficha en la nueva posicion con el siguiente valor 
-	            agregarFicha(filaNuevaFicha,columnaNuevaFicha,siguienteValor);
-	            
-	            
-	            this.cantidadDeFichas++;
-	        }
-	    }
-		
-		
- 	
 
 	public boolean sePuedeFusionar(Ficha ficha1, Ficha ficha2) {
-		if(ficha1 == null | ficha2 == null) {
+		if (ficha1 == null | ficha2 == null) {
 			return false;
 		}
-		
+
 		int valor1 = ficha1.getValor();
 		int valor2 = ficha2.getValor();
-		
-		if((valor1 == 1 && valor2 == 2) || (valor1 == 2 && valor2 == 1)){
+
+		if ((valor1 == 1 && valor2 == 2) || (valor1 == 2 && valor2 == 1)) {
 			return true;
-		}
-		else if(valor1 == valor2 && valor1 >= 3) {
+		} else if (valor1 == valor2 && valor1 >= 3) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
+	}
+
+	public void agregarCantidadFichas() {
+		this.cantidadDeFichas++;
+
 	}
 
 }
