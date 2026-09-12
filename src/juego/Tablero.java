@@ -5,6 +5,7 @@ import java.util.Random;
 public class Tablero {
 	private int cantidadDeFichas;
 	private Ficha[][] matrizDeJuego;
+	private int puntajeTotal;
 
 	public Tablero() {
 		this.matrizDeJuego = new Ficha[4][4];
@@ -88,7 +89,7 @@ public class Tablero {
 						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
 					} else {
-				
+						
 						combinarFichas(fila, col, fila + 1, col);
 					}
 				}
@@ -99,6 +100,10 @@ public class Tablero {
 	public int obtenerLargoTablero() {
 		return matrizDeJuego.length;
 	}
+	
+	public int getPuntajeTotal() {
+		return this.puntajeTotal;
+	}
 
 	public boolean posicionLibre(int nFila, int nCol) {
 		if (matrizDeJuego[nFila][nCol] == null) {
@@ -107,8 +112,29 @@ public class Tablero {
 			return false;
 		}
 	}
+	
+	private void calcularPuntuacion(int valorFicha1, int valorFicha2) {
+		int suma = valorFicha1 + valorFicha2;
+		puntajeTotal+=suma;
+	}
 
-	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {ºº}
+	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
+		// usamos las coordenadas de los parametros para saber el valor de las fichas
+		Ficha fichaOrigen = matrizDeJuego[filaFichaOrigen][columFichaOrigen];
+		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
+
+		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
+			calcularPuntuacion(fichaDestino.getValor(), fichaOrigen.getValor());
+			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
+			fichaDestino.setValor(nuevoValorFicha);
+
+			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
+
+			this.cantidadDeFichas--;
+			
+			
+		}
+	}
 
 	public Ficha obtenerFicha(int i, int j) {
 		return matrizDeJuego[i][j];
