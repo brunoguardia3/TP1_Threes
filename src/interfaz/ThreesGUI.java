@@ -27,6 +27,7 @@ public class ThreesGUI extends JFrame{
     private JLabel lblPuntaje;
     private JLabel lblSiguienteFicha;
     private JLabel lblSugerencia;
+    private JLabel lblSiguienteValor;
     Model model = new Model();
 
     /**
@@ -71,7 +72,7 @@ public class ThreesGUI extends JFrame{
         lblPuntaje.setFont(new Font("Arial", Font.BOLD, 18));
         panelInfo.add(lblPuntaje);
 
-        lblSiguienteFicha = new JLabel("Siguiente: ?");
+        lblSiguienteFicha = new JLabel("Siguiente: ");
         lblSiguienteFicha.setHorizontalAlignment(SwingConstants.RIGHT);
         lblSiguienteFicha.setFont(new Font("Arial", Font.BOLD, 18));
         panelInfo.add(lblSiguienteFicha);
@@ -193,8 +194,8 @@ public class ThreesGUI extends JFrame{
     /**
      * Muestra la siguiente ficha (Objetivo opcional 1).
      */
-    public void mostrarSiguienteFicha(String valor) {
-        lblSiguienteFicha.setText("Siguiente: " + valor);
+    public void mostrarSiguienteFicha() {
+        lblSiguienteFicha.setText("Siguiente: " + model.getSiguienteValor());
     }
     
     /**
@@ -252,6 +253,7 @@ public class ThreesGUI extends JFrame{
     			actualizarCelda(fila, col, texto, colorFondo);
     		}
     	}
+    	mostrarSiguienteFicha();
     	actualizarPuntaje();
     	
     	

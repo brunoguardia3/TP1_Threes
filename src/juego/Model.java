@@ -116,7 +116,7 @@ public class Model {
 		return nroAleatoria;
 	}
 
-	public int getSiguientValor() {
+	public int getSiguienteValor() {
 		return siguienteValor;
 	}
 
