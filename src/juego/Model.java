@@ -127,24 +127,19 @@ public class Model {
 		if (tablero.getCantidadDeFichasPresentes() < 16) {
 			return false;
 		}
+		
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
 
 		for (int i = 0; i < tablero.getLargoTablero() - 1; i++) {
 			for (int j = 0; j < tablero.getLargoTablero(); j++) {
-				if (tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i + 1, j))) {
-					sinCombinacionesVerticales = false;
-
-				}
+				sinCombinacionesVerticales = sinCombinacionesVerticales && !tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i + 1, j));				
 			}
 		}
 
 		for (int i = 0; i < tablero.getLargoTablero(); i++) {
 			for (int j = 0; j < tablero.getLargoTablero() - 1; j++) {
-				if (tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i, j + 1))) {
-					sinCombinacionesHorizontales = false;
-
-				}
+				sinCombinacionesHorizontales = sinCombinacionesHorizontales && !tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i, j + 1));		
 			}
 		}
 
