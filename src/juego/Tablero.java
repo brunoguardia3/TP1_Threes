@@ -10,8 +10,9 @@ public class Tablero {
 	public Tablero() {
 		this.matrizDeJuego = new Ficha[4][4];
 		// Fichas iniciales
-		this.matrizDeJuego[1][1] = new Ficha(1);
-		this.matrizDeJuego[2][2] = new Ficha(2);
+		agregarFicha(1, 1, new Ficha(1));
+		agregarFicha(2, 2, new Ficha(2));
+		
 		this.cantidadDeFichas = 2;
 	}
 
