@@ -13,7 +13,6 @@ public class Tablero {
 		this.matrizDeJuego[2][2] = new Ficha(2);
 
 		this.cantidadDeFichas = 2;
-		this.matrizDeJuego = new Ficha[4][4];
 	}
 
 	public void moverDerecha() {
