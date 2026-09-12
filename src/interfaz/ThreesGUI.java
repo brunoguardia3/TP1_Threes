@@ -241,8 +241,8 @@ public class ThreesGUI extends JFrame{
     public void actualizarPantalla() {
     	Tablero tablero= model.getTablero();
     	
-    	for(int fila=0;fila<tablero.obtenerLargoTablero();fila++) {
-    		for(int col=0; col < tablero.obtenerLargoTablero();col++) {
+    	for(int fila=0;fila<tablero.getLargoTablero();fila++) {
+    		for(int col=0; col < tablero.getLargoTablero();col++) {
     			Ficha ficha= tablero.obtenerFicha(fila, col);
     			
     			int valor=(ficha != null) ? ficha.getValor() : 0;

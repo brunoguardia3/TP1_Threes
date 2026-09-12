@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class Tablero {
 	private int cantidadDeFichas;
-	private Ficha[][] matrizDeJuego;
+	private Ficha[][] matrizDeTablero;
 	private int puntajeTotal;
 
 	public Tablero() {
-		this.matrizDeJuego = new Ficha[4][4];
+		this.matrizDeTablero = new Ficha[4][4];
 		// Fichas iniciales
 		agregarFicha(1, 1, new Ficha(1));
 		agregarFicha(2, 2, new Ficha(2));
@@ -16,18 +16,43 @@ public class Tablero {
 		this.cantidadDeFichas = 2;
 	}
 
+	public int getLargoTablero() {
+		return matrizDeTablero.length;
+	}
+	
+	public int getPuntajeTotal() {
+		return this.puntajeTotal;
+	}
+	
+	public void incrementarCantidadFichas() {
+		this.cantidadDeFichas++;
+
+	}
+	
+	public Ficha obtenerFicha(int i, int j) {
+		return matrizDeTablero[i][j];
+	}
+	
+	public int getCantidadDeFichasPresentes() {
+		return this.cantidadDeFichas;
+	}
+	
+	public void agregarFicha(int fila, int columna, Ficha ficha) {
+
+		this.matrizDeTablero[fila][columna] = ficha;
+	}
+	
 	public void moverDerecha() {
-		// recorremos las filas de abajo para arriba y las columnas de derecha a
-		// izquierda
-		for (int fila = 0; fila < obtenerLargoTablero(); fila++) {
 
-			for (int col = obtenerLargoTablero() - 2; col >= 0; col--) {
+		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
-				if (matrizDeJuego[fila][col] != null) {
+			for (int col = getLargoTablero() - 2; col >= 0; col--) {
 
-					if (matrizDeJuego[fila][col + 1] == null) {
-						matrizDeJuego[fila][col + 1] = matrizDeJuego[fila][col];
-						matrizDeJuego[fila][col] = null;
+				if (matrizDeTablero[fila][col] != null) {
+
+					if (matrizDeTablero[fila][col + 1] == null) {
+						matrizDeTablero[fila][col + 1] = matrizDeTablero[fila][col];
+						matrizDeTablero[fila][col] = null;
 					} else {
 						
 						combinarFichas(fila, col, fila, col + 1);
@@ -38,17 +63,16 @@ public class Tablero {
 	}
 
 	public void moverIzquierda() {
-		// recorremos las filas de abajo para arriba y las columnas de izquierda a
-		// derecha
-		for (int fila = 0; fila < obtenerLargoTablero(); fila++) {
+	
+		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
-			for (int col = 1; col < obtenerLargoTablero(); col++) {
+			for (int col = 1; col < getLargoTablero(); col++) {
 
-				if (matrizDeJuego[fila][col] != null) {
+				if (matrizDeTablero[fila][col] != null) {
 
-					if (matrizDeJuego[fila][col - 1] == null) {
-						matrizDeJuego[fila][col - 1] = matrizDeJuego[fila][col];
-						matrizDeJuego[fila][col] = null;
+					if (matrizDeTablero[fila][col - 1] == null) {
+						matrizDeTablero[fila][col - 1] = matrizDeTablero[fila][col];
+						matrizDeTablero[fila][col] = null;
 					} else {
 						combinarFichas(fila, col, fila, col - 1);
 					}
@@ -58,17 +82,16 @@ public class Tablero {
 	}
 
 	public void moverArriba() {
-		// recorremos las filas desde abajo hacia arriba y las columnas desde izquierda
-		// a derecha
-		for (int fila = 1; fila < obtenerLargoTablero(); fila++) {
 
-			for (int col = 0; col < obtenerLargoTablero(); col++) {
+		for (int fila = 1; fila < getLargoTablero(); fila++) {
 
-				if (matrizDeJuego[fila][col] != null) {
+			for (int col = 0; col < getLargoTablero(); col++) {
 
-					if (matrizDeJuego[fila - 1][col] == null) {
-						matrizDeJuego[fila - 1][col] = matrizDeJuego[fila][col];
-						matrizDeJuego[fila][col] = null;
+				if (matrizDeTablero[fila][col] != null) {
+
+					if (matrizDeTablero[fila - 1][col] == null) {
+						matrizDeTablero[fila - 1][col] = matrizDeTablero[fila][col];
+						matrizDeTablero[fila][col] = null;
 					} else {
 						combinarFichas(fila, col, fila - 1, col);
 					}
@@ -78,17 +101,16 @@ public class Tablero {
 	}
 
 	public void moverAbajo() {
-		// recorremos las filas desde arriba hacia abajo y las columnas desde izquierda
-		// a derecha
-		for (int fila = obtenerLargoTablero() - 2; fila >= 0; fila--) {
+	
+		for (int fila = getLargoTablero() - 2; fila >= 0; fila--) {
 
-			for (int col = 0; col < obtenerLargoTablero(); col++) {
+			for (int col = 0; col < getLargoTablero(); col++) {
 
-				if (matrizDeJuego[fila][col] != null) {
+				if (matrizDeTablero[fila][col] != null) {
 
-					if (matrizDeJuego[fila + 1][col] == null) {
-						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
-						matrizDeJuego[fila][col] = null;
+					if (matrizDeTablero[fila + 1][col] == null) {
+						matrizDeTablero[fila + 1][col] = matrizDeTablero[fila][col];
+						matrizDeTablero[fila][col] = null;
 					} else {
 						
 						combinarFichas(fila, col, fila + 1, col);
@@ -98,59 +120,12 @@ public class Tablero {
 		}
 	}
 
-	public int obtenerLargoTablero() {
-		return matrizDeJuego.length;
-	}
-	
-	public int getPuntajeTotal() {
-		return this.puntajeTotal;
-	}
-
-	public boolean posicionLibre(int nFila, int nCol) {
-		if (matrizDeJuego[nFila][nCol] == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	private void calcularPuntuacion(int valorFicha1, int valorFicha2) {
 		int suma = valorFicha1 + valorFicha2;
 		puntajeTotal+=suma;
 	}
-
-	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
-		// usamos las coordenadas de los parametros para saber el valor de las fichas
-		Ficha fichaOrigen = matrizDeJuego[filaFichaOrigen][columFichaOrigen];
-		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
-
-		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
-			calcularPuntuacion(fichaDestino.getValor(), fichaOrigen.getValor());
-			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
-			fichaDestino.setValor(nuevoValorFicha);
-
-			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
-
-			this.cantidadDeFichas--;
-			
-			
-		}
-	}
-
-	public Ficha obtenerFicha(int i, int j) {
-		return matrizDeJuego[i][j];
-	}
-
-	public int cantidadDeFichasPresentes() {
-		return this.cantidadDeFichas;
-	}
-
-	public void agregarFicha(int fila, int columna, Ficha ficha) {
-
-		this.matrizDeJuego[fila][columna] = ficha;
-
-	}
-
+	
 	public boolean sePuedeFusionar(Ficha ficha1, Ficha ficha2) {
 		if (ficha1 == null | ficha2 == null) {
 			return false;
@@ -168,9 +143,22 @@ public class Tablero {
 		}
 	}
 
-	public void agregarCantidadFichas() {
-		this.cantidadDeFichas++;
+	private void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
+		// usamos las coordenadas de los parametros para saber el valor de las fichas
+		Ficha fichaOrigen = matrizDeTablero[filaFichaOrigen][columFichaOrigen];
+		Ficha fichaDestino = matrizDeTablero[filaFichaDestino][columFichaDestino];
 
+		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
+			calcularPuntuacion(fichaDestino.getValor(), fichaOrigen.getValor());
+			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
+			fichaDestino.setValor(nuevoValorFicha);
+
+			matrizDeTablero[filaFichaOrigen][columFichaOrigen] = null;
+
+			this.cantidadDeFichas--;
+			
+			
+		}
 	}
 
 }

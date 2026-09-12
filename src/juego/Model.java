@@ -3,18 +3,38 @@ package juego;
 import java.util.Random;
 
 public class Model {
-	Tablero tablero = new Tablero();
-	int puntuacion = 0;
-	boolean juegoTerminado = false;
+	private Tablero tablero;
+	private int puntuacion;
+	private boolean juegoTerminado;
 	private int siguienteValor;
 
 	public Model() {
+		this.tablero = new Tablero();
+		this.puntuacion = 0;
+		this.juegoTerminado = false;
 		this.siguienteValor = generarNumeroAleatoria();
 	}
 
 	public Tablero getTablero() {
 		return tablero;
 	}
+
+	public int getPuntuacion() {
+		return this.puntuacion = tablero.getPuntajeTotal();
+	}
+
+	public boolean getJuegoTerminado() {
+		return this.juegoTerminado;
+	}
+
+	public int getSiguienteValor() {
+		return siguienteValor;
+	}
+
+	public void setPuntuacion(int nuevaPuntuacion) {
+		this.puntuacion = nuevaPuntuacion;
+	}
+
 
 	public void moverDerecha() {
 		tablero.moverDerecha();
@@ -36,13 +56,18 @@ public class Model {
 		generarFichaAleatoria("abajo");
 	}
 
-	public int getPuntuacion() {
-		return this.puntuacion = tablero.getPuntajeTotal();
+	private int generarNumeroAleatoria() {
+		Random random = new Random();
+
+		int[] posiblesValoresFichas = { 1, 2, 3 };
+
+		int indice = random.nextInt(posiblesValoresFichas.length);
+
+		int nroAleatoria = posiblesValoresFichas[indice];
+
+		return nroAleatoria;
 	}
 
-	public void setPuntuacion(int nuevaPuntuacion) {
-		this.puntuacion = nuevaPuntuacion;
-	}
 	public void generarFichaAleatoria(String direccion) {
 		Random random = new Random();
 
@@ -51,7 +76,7 @@ public class Model {
 
 		int cantCeldasVacias = 0;
 
-		int borde = tablero.obtenerLargoTablero() - 1;
+		int borde = tablero.getLargoTablero() - 1;
 
 		// Se Busca celdas vacías en el borde contrario al movimiento
 		if (direccion.equals("derecha")) {
@@ -96,41 +121,24 @@ public class Model {
 			int columnaNuevaFicha = posColumnasVacias[indiceRandom];
 
 			// Se coloca nueva ficha en la nueva posicion con el siguiente valor
-			
+
 			tablero.agregarFicha(filaNuevaFicha, columnaNuevaFicha, new Ficha(siguienteValor));
-			tablero.agregarCantidadFichas();
+			tablero.incrementarCantidadFichas();
 			siguienteValor = generarNumeroAleatoria();
 
 		}
 	}
 
-	// Ese metodo genera un numero aleatorio de 1 a 3 para las nuevas fichas
-	public int generarNumeroAleatoria() {
-		Random random = new Random();
-
-		int[] posiblesValoresFichas = { 1, 2, 3 };
-
-		int indice = random.nextInt(posiblesValoresFichas.length);
-
-		int nroAleatoria = posiblesValoresFichas[indice];
-
-		return nroAleatoria;
-	}
-
-	public int getSiguienteValor() {
-		return siguienteValor;
-	}
-
 	public void isJuegoTerminado() {
-		if (tablero.cantidadDeFichasPresentes() < 16) {
+		if (tablero.getCantidadDeFichasPresentes() < 16) {
 			juegoTerminado = false;
 			return;
 		}
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
 
-		for (int i = 0; i < tablero.obtenerLargoTablero() - 1; i++) {
-			for (int j = 0; j < tablero.obtenerLargoTablero(); j++) {
+		for (int i = 0; i < tablero.getLargoTablero() - 1; i++) {
+			for (int j = 0; j < tablero.getLargoTablero(); j++) {
 				if (tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i + 1, j))) {
 					sinCombinacionesVerticales = false;
 
@@ -138,8 +146,8 @@ public class Model {
 			}
 		}
 
-		for (int i = 0; i < tablero.obtenerLargoTablero(); i++) {
-			for (int j = 0; j < tablero.obtenerLargoTablero() - 1; j++) {
+		for (int i = 0; i < tablero.getLargoTablero(); i++) {
+			for (int j = 0; j < tablero.getLargoTablero() - 1; j++) {
 				if (tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i, j + 1))) {
 					sinCombinacionesHorizontales = false;
 
