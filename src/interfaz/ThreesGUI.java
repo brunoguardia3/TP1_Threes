@@ -27,6 +27,8 @@ public class ThreesGUI extends JFrame{
 	private JLabel lblSiguienteFicha;
 	private JLabel lblSugerencia;
 	private boolean finMostrado = false, juegoGanado = false;
+	private int contadorParaSiguienteSugerencia = 0;
+	
 	Model model = new Model();
 
 	public ThreesGUI()  { 
@@ -186,7 +188,7 @@ public class ThreesGUI extends JFrame{
 	 * Muestra una sugerencia al usuario (Objetivo opcional 3).
 	 */
 	public void mostrarSugerencia(String sugerencia) {
-		lblSugerencia.setText("Sugerencia de jugada: " + sugerencia);
+		lblSugerencia.setText("<html><center>Sugerencia: <br>" + sugerencia + "</center></html>");
 	}
 
 	public void moverFichaDerecha() {
@@ -245,6 +247,7 @@ public class ThreesGUI extends JFrame{
 	private void reiniciarPartida() {
 		model.reiniciarJuego();
 		finMostrado=false;
+		contadorParaSiguienteSugerencia = 0;
 		resetButton.setVisible(false);
 		actualizarPantalla();
 		requestFocusInWindow();
@@ -271,7 +274,17 @@ public class ThreesGUI extends JFrame{
 
 				actualizarCelda(fila, col, texto, colorFondo);
 			}
-		}	
+		}
+		
+		contadorParaSiguienteSugerencia++;
+		
+		if(contadorParaSiguienteSugerencia > 10) {
+			contadorParaSiguienteSugerencia = 0;
+			model.actualizarSugerenciaAleatoria();
+		}
+		
+		mostrarSugerencia(model.getSugerenciaActual());
+		
 		mostrarSiguienteFicha();
 		actualizarPuntaje();
 		verificarFinJuego();
