@@ -32,7 +32,7 @@ public class Model {
 	public void reiniciarJuego() {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
-		
+
 	}
 	public void moverDerecha() {
 		tablero.moverDerecha();
@@ -131,7 +131,7 @@ public class Model {
 		if (tablero.getCantidadDeFichasPresentes() < 16) {
 			return false;
 		}
-		
+
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
 
@@ -147,7 +147,14 @@ public class Model {
 			}
 		}
 
-	
+
 		return sinCombinacionesVerticales && sinCombinacionesHorizontales;
+	}
+
+	public boolean isJuegoGanado() {
+		if(this.puntuacion>=50) {
+			return true;
+		}
+		return false;
 	}
 }
