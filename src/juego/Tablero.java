@@ -5,13 +5,13 @@ import java.util.Random;
 public class Tablero {
 	private int cantidadDeFichas;
 	private Ficha[][] matrizDeJuego;
+	private int puntajeTotal;
 
 	public Tablero() {
 		this.matrizDeJuego = new Ficha[4][4];
 		// Fichas iniciales
 		this.matrizDeJuego[1][1] = new Ficha(1);
 		this.matrizDeJuego[2][2] = new Ficha(2);
-
 		this.cantidadDeFichas = 2;
 	}
 
@@ -28,6 +28,7 @@ public class Tablero {
 						matrizDeJuego[fila][col + 1] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
 					} else {
+						
 						combinarFichas(fila, col, fila, col + 1);
 					}
 				}
@@ -88,6 +89,7 @@ public class Tablero {
 						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
 					} else {
+						
 						combinarFichas(fila, col, fila + 1, col);
 					}
 				}
@@ -95,25 +97,12 @@ public class Tablero {
 		}
 	}
 
-	private boolean validarSiHayBorde(int fila, int columna, String direccion) {
-		// traemos el largo de fila y columna
-		int maximoMatriz = matrizDeJuego.length - 1;
-
-		if (direccion.equals("arriba") && fila == 0) {
-			return true;
-		} else if (direccion.equals("abajo") && fila == maximoMatriz) {
-			return true;
-		} else if (direccion.equals("izquierda") && columna == 0) {
-			return true;
-		} else if (direccion.equals("derecha") && columna == maximoMatriz) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public int obtenerLargoTablero() {
 		return matrizDeJuego.length;
+	}
+	
+	public int getPuntajeTotal() {
+		return this.puntajeTotal;
 	}
 
 	public boolean posicionLibre(int nFila, int nCol) {
@@ -123,6 +112,11 @@ public class Tablero {
 			return false;
 		}
 	}
+	
+	private void calcularPuntuacion(int valorFicha1, int valorFicha2) {
+		int suma = valorFicha1 + valorFicha2;
+		puntajeTotal+=suma;
+	}
 
 	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
 		// usamos las coordenadas de los parametros para saber el valor de las fichas
@@ -130,12 +124,15 @@ public class Tablero {
 		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
 
 		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
+			calcularPuntuacion(fichaDestino.getValor(), fichaOrigen.getValor());
 			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
 			fichaDestino.setValor(nuevoValorFicha);
 
 			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
 
 			this.cantidadDeFichas--;
+			
+			
 		}
 	}
 

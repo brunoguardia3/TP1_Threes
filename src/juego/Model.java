@@ -4,9 +4,8 @@ import java.util.Random;
 
 public class Model {
 	Tablero tablero = new Tablero();
-	int puntuación = 0;
+	int puntuacion = 0;
 	boolean juegoTerminado = false;
-
 	private int siguienteValor;
 
 	public Model() {
@@ -38,10 +37,12 @@ public class Model {
 	}
 
 	public int getPuntuacion() {
-		return puntuación;
+		return this.puntuacion = tablero.getPuntajeTotal();
 	}
-	
 
+	public void setPuntuacion(int nuevaPuntuacion) {
+		this.puntuacion = nuevaPuntuacion;
+	}
 	public void generarFichaAleatoria(String direccion) {
 		Random random = new Random();
 
