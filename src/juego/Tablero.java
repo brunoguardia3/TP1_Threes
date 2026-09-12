@@ -1,7 +1,5 @@
 package juego;
 
-import java.util.Random;
-
 public class Tablero {
 	private int cantidadDeFichas;
 	private Ficha[][] matrizDeTablero;
