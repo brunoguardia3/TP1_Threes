@@ -29,7 +29,11 @@ public class Model {
 		this.puntuacion = nuevaPuntuacion;
 	}
 
-
+	public void reiniciarJuego() {
+		this.tablero = new Tablero();
+		this.puntuacion = 0;
+		
+	}
 	public void moverDerecha() {
 		tablero.moverDerecha();
 		generarFichaAleatoria("derecha");
