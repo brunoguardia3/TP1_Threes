@@ -30,26 +30,7 @@ public class ThreesGUI extends JFrame{
     private JLabel lblSugerencia;
     private boolean finMostrado = false;
     Model model = new Model();
-
-    /**
-     * Launch the application. (Solo para probar la interfaz aislada)
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ThreesGUI frame = new ThreesGUI();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
-            }
-        });
-
-    }
-
-    
+  
     public ThreesGUI()  { 
         // Configuración básica de la ventana (Respeta el límite de 1366 x 768)
         setTitle("Threes! - Trabajo Práctico");
