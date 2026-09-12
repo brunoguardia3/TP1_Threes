@@ -28,6 +28,7 @@ public class ThreesGUI extends JFrame{
     private JLabel lblPuntaje;
     private JLabel lblSiguienteFicha;
     private JLabel lblSugerencia;
+    private boolean finMostrado = false;
     Model model = new Model();
 
     /**
@@ -206,12 +207,18 @@ public class ThreesGUI extends JFrame{
     }
     
     public void moverFichaDerecha() {
+    	if (finMostrado) {
+            return;
+        }
     	model.moverDerecha();
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaIzquierda() {
+    	if (finMostrado) {
+            return;
+        }
     	model.moverIzquierda();
     	actualizarPantalla();
     	requestFocusInWindow();
@@ -219,18 +226,31 @@ public class ThreesGUI extends JFrame{
     	
     }
     public void moverFichaArriba() {
+    	if (finMostrado) {
+            return;
+        }
     	model.moverArriba();
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaAbajo() {
+    	if (finMostrado) {
+            return;
+        }
     	model.moverAbajo();
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
  
+    private void verificarFinJuego() {
+        if (!finMostrado && model.isJuegoTerminado()) {
+            mostrarFinJuego();
+            finMostrado = true;
+        }
+    }
+    
     private Color obtenerColorPorValor(int valor) {
         if (valor == 0) return new Color(200, 200, 200); // Celda vacía (Gris)
         if (valor == 1) return new Color(102, 204, 255); // Ficha 1 (Celeste)
@@ -255,12 +275,13 @@ public class ThreesGUI extends JFrame{
     	}
     	mostrarSiguienteFicha();
     	actualizarPuntaje();
+    	verificarFinJuego();
     	
     	
     }
     
     public void mostrarFinJuego() {
-        JOptionPane.showMessageDialog(frame, 
+        JOptionPane.showMessageDialog(this, 
             "¡No hay más movimientos posibles!\nTu puntaje final es: " + model.getPuntuacion(), 
             "Juego Terminado", 
             JOptionPane.INFORMATION_MESSAGE);
