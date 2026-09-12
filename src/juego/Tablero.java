@@ -11,9 +11,7 @@ public class Tablero {
 		// Fichas iniciales
 		this.matrizDeJuego[1][1] = new Ficha(1);
 		this.matrizDeJuego[2][2] = new Ficha(2);
-
 		this.cantidadDeFichas = 2;
-		this.matrizDeJuego = new Ficha[4][4];
 	}
 
 	public void moverDerecha() {
@@ -29,6 +27,7 @@ public class Tablero {
 						matrizDeJuego[fila][col + 1] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
 					} else {
+						
 						combinarFichas(fila, col, fila, col + 1);
 					}
 				}
@@ -89,27 +88,11 @@ public class Tablero {
 						matrizDeJuego[fila + 1][col] = matrizDeJuego[fila][col];
 						matrizDeJuego[fila][col] = null;
 					} else {
+				
 						combinarFichas(fila, col, fila + 1, col);
 					}
 				}
 			}
-		}
-	}
-
-	private boolean validarSiHayBorde(int fila, int columna, String direccion) {
-		// traemos el largo de fila y columna
-		int maximoMatriz = matrizDeJuego.length - 1;
-
-		if (direccion.equals("arriba") && fila == 0) {
-			return true;
-		} else if (direccion.equals("abajo") && fila == maximoMatriz) {
-			return true;
-		} else if (direccion.equals("izquierda") && columna == 0) {
-			return true;
-		} else if (direccion.equals("derecha") && columna == maximoMatriz) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -125,20 +108,7 @@ public class Tablero {
 		}
 	}
 
-	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
-		// usamos las coordenadas de los parametros para saber el valor de las fichas
-		Ficha fichaOrigen = matrizDeJuego[filaFichaOrigen][columFichaOrigen];
-		Ficha fichaDestino = matrizDeJuego[filaFichaDestino][columFichaDestino];
-
-		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
-			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
-			fichaDestino.setValor(nuevoValorFicha);
-
-			matrizDeJuego[filaFichaOrigen][columFichaOrigen] = null;
-
-			this.cantidadDeFichas--;
-		}
-	}
+	public void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {ºº}
 
 	public Ficha obtenerFicha(int i, int j) {
 		return matrizDeJuego[i][j];

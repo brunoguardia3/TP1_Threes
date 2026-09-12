@@ -1,6 +1,7 @@
 package interfaz;
 
 import juego.Model;
+
 import juego.Ficha;
 import juego.Tablero;
 
@@ -27,7 +28,6 @@ public class ThreesGUI extends JFrame{
     private JLabel lblPuntaje;
     private JLabel lblSiguienteFicha;
     private JLabel lblSugerencia;
-    private JLabel lblSiguienteValor;
     Model model = new Model();
 
     /**
@@ -257,5 +257,12 @@ public class ThreesGUI extends JFrame{
     	actualizarPuntaje();
     	
     	
+    }
+    
+    public void mostrarFinJuego() {
+        JOptionPane.showMessageDialog(frame, 
+            "¡No hay más movimientos posibles!\nTu puntaje final es: " + model.getPuntuacion(), 
+            "Juego Terminado", 
+            JOptionPane.INFORMATION_MESSAGE);
     }
 }

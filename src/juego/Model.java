@@ -6,7 +6,6 @@ public class Model {
 	Tablero tablero = new Tablero();
 	int puntuación = 0;
 	boolean juegoTerminado = false;
-
 	private int siguienteValor;
 
 	public Model() {
