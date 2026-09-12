@@ -19,25 +19,30 @@ public class Model {
 
 	public void moverDerecha() {
 		tablero.moverDerecha();
+		generarFichaAleatoria("derecha");
 	}
 
 	public void moverIzquierda() {
 		tablero.moverIzquierda();
+		generarFichaAleatoria("izquierda");
 	}
 
 	public void moverArriba() {
 		tablero.moverArriba();
+		generarFichaAleatoria("arriba");
 	}
 
 	public void moverAbajo() {
 		tablero.moverAbajo();
+		generarFichaAleatoria("abajo");
 	}
 
 	public int getPuntuacion() {
 		return puntuación;
 	}
+	
 
-	public void generarFichaAleatoria(String direccion, int siguienteValor) {
+	public void generarFichaAleatoria(String direccion) {
 		Random random = new Random();
 
 		int[] posFilasVacias = new int[4];
@@ -90,9 +95,10 @@ public class Model {
 			int columnaNuevaFicha = posColumnasVacias[indiceRandom];
 
 			// Se coloca nueva ficha en la nueva posicion con el siguiente valor
-			tablero.agregarFicha(filaNuevaFicha, columnaNuevaFicha, siguienteValor);
-
+			
+			tablero.agregarFicha(filaNuevaFicha, columnaNuevaFicha, new Ficha(siguienteValor));
 			tablero.agregarCantidadFichas();
+			siguienteValor = generarNumeroAleatoria();
 
 		}
 	}

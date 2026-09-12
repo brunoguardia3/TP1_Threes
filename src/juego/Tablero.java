@@ -148,9 +148,9 @@ public class Tablero {
 		return this.cantidadDeFichas;
 	}
 
-	public void agregarFicha(int fila, int columna, int nuevovalor) {
+	public void agregarFicha(int fila, int columna, Ficha ficha) {
 
-		this.matrizDeJuego[fila][columna] = new Ficha(nuevovalor);
+		this.matrizDeJuego[fila][columna] = ficha;
 
 	}
 

@@ -44,6 +44,7 @@ public class ThreesGUI extends JFrame{
                 
             }
         });
+
     }
 
     
@@ -100,7 +101,7 @@ public class ThreesGUI extends JFrame{
                 panelGrilla.add(lblCelda);
             }
         }
-
+        
         JPanel panelInferior = new JPanel();
         panelInferior.setOpaque(false);
         panelInferior.setLayout(new BorderLayout(0, 10)); // Separación de 10px vertical
@@ -143,9 +144,27 @@ public class ThreesGUI extends JFrame{
         panelBotones.add(abajoButton);
         panelBotones.add(new JLabel(""));
         
+        configurarEventosBotones();
+        configurarEventosTeclado();
+        actualizarPantalla();
+
         // Esto es clave para que la ventana pueda detectar los eventos del teclado (las flechas)
         setFocusable(true);
         requestFocusInWindow();
+    }
+
+    private void configurarEventosBotones() {
+        arribaButton.addActionListener(e -> moverFichaArriba());
+        abajoButton.addActionListener(e -> moverFichaAbajo());
+        izqButton.addActionListener(e -> moverFichaIzquierda());
+        derButton.addActionListener(e -> moverFichaDerecha());
+    }
+
+    private void configurarEventosTeclado() {
+        getRootPane().registerKeyboardAction(e -> moverFichaArriba(), KeyStroke.getKeyStroke("UP"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        getRootPane().registerKeyboardAction(e -> moverFichaAbajo(), KeyStroke.getKeyStroke("DOWN"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        getRootPane().registerKeyboardAction(e -> moverFichaIzquierda(), KeyStroke.getKeyStroke("LEFT"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+        getRootPane().registerKeyboardAction(e -> moverFichaDerecha(), KeyStroke.getKeyStroke("RIGHT"), JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
     
    
@@ -187,14 +206,14 @@ public class ThreesGUI extends JFrame{
     
     public void moverFichaDerecha() {
     	model.moverDerecha();
-    	generarFicha();
+    	model.generarFichaAleatoria("derecha");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaIzquierda() {
     	model.moverIzquierda();
-    	generarFicha();
+    	model.generarFichaAleatoria("izquierda");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
@@ -202,22 +221,26 @@ public class ThreesGUI extends JFrame{
     }
     public void moverFichaArriba() {
     	model.moverArriba();
-    	generarFicha();
+    	model.generarFichaAleatoria("arriba");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaAbajo() {
     	model.moverAbajo();
-    	generarFicha();
+    	model.generarFichaAleatoria("abajo");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
-    public void generarFicha() {
-    	model.generarFichaAleatoria();
+ 
+    private Color obtenerColorPorValor(int valor) {
+        if (valor == 0) return new Color(200, 200, 200); // Celda vacía (Gris)
+        if (valor == 1) return new Color(102, 204, 255); // Ficha 1 (Celeste)
+        if (valor == 2) return new Color(255, 102, 102); // Ficha 2 (Roja)
+        return Color.WHITE;                              // Fichas 3+ (Blancas)
     }
-    
+
     public void actualizarPantalla() {
     	Tablero tablero= model.getTablero();
     	
@@ -234,25 +257,7 @@ public class ThreesGUI extends JFrame{
     		}
     	}
     	actualizarPuntaje();
-    	juegoTerminado();
-    }
-    
-    
-    public void juegoTerminado() { 
-    	 JOptionPane.showMessageDialog(frame, 
-    	            "¡No hay más movimientos posibles!\nTu puntaje final es: " + model.getPuntuacion(), 
-    	            "Juego Terminado", 
-    	            JOptionPane.INFORMATION_MESSAGE);
-    	    }
-    
-    private Color obtenerColorPorValor(int valor) {
-        if (valor == 0) return new Color(200, 200, 200); // Celda vacía (Gris)
-        if (valor == 1) return new Color(102, 204, 255); // Ficha 1 (Celeste)
-        if (valor == 2) return new Color(255, 102, 102); // Ficha 2 (Roja)
-        return Color.WHITE;                              // Fichas 3+ (Blancas)
-    }
+    	
     	
     }
-    
-    
-    
+}
