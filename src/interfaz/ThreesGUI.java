@@ -206,14 +206,12 @@ public class ThreesGUI extends JFrame{
     
     public void moverFichaDerecha() {
     	model.moverDerecha();
-    	model.generarFichaAleatoria("derecha");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaIzquierda() {
     	model.moverIzquierda();
-    	model.generarFichaAleatoria("izquierda");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
@@ -221,14 +219,12 @@ public class ThreesGUI extends JFrame{
     }
     public void moverFichaArriba() {
     	model.moverArriba();
-    	model.generarFichaAleatoria("arriba");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
     }
     public void moverFichaAbajo() {
     	model.moverAbajo();
-    	model.generarFichaAleatoria("abajo");
     	actualizarPantalla();
     	requestFocusInWindow();
     	
