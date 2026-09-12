@@ -5,13 +5,11 @@ import java.util.Random;
 public class Model {
 	private Tablero tablero;
 	private int puntuacion;
-	private boolean juegoTerminado;
 	private int siguienteValor;
 
 	public Model() {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
-		this.juegoTerminado = false;
 		this.siguienteValor = generarNumeroAleatoria();
 	}
 
@@ -21,10 +19,6 @@ public class Model {
 
 	public int getPuntuacion() {
 		return this.puntuacion = tablero.getPuntajeTotal();
-	}
-
-	public boolean getJuegoTerminado() {
-		return this.juegoTerminado;
 	}
 
 	public int getSiguienteValor() {
@@ -129,10 +123,9 @@ public class Model {
 		}
 	}
 
-	public void isJuegoTerminado() {
+	public boolean isJuegoTerminado() {
 		if (tablero.getCantidadDeFichasPresentes() < 16) {
-			juegoTerminado = false;
-			return;
+			return false;
 		}
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
@@ -155,6 +148,7 @@ public class Model {
 			}
 		}
 
-		juegoTerminado = sinCombinacionesVerticales && sinCombinacionesHorizontales;
+	
+		return sinCombinacionesVerticales && sinCombinacionesHorizontales;
 	}
 }
