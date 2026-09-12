@@ -1,12 +1,10 @@
 package interfaz;
 
+
 import juego.Model;
 
 import juego.Ficha;
 import juego.Tablero;
-
-import java.awt.EventQueue;
-import java.util.Iterator;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
@@ -21,7 +19,7 @@ public class ThreesGUI extends JFrame{
 	private JPanel contentPane;
 	private JPanel panelGrilla;
 	private JLabel[][] casillas;
-	private JFrame frame;
+
 	private JButton izqButton,derButton,arribaButton,abajoButton, resetButton;
 
 	// Elementos para los objetivos opcionales y estado

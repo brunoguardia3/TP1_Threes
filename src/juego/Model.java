@@ -152,7 +152,7 @@ public class Model {
 	}
 
 	public boolean isJuegoGanado() {
-		if(this.puntuacion>=50) {
+		if(this.puntuacion>=500) {
 			return true;
 		}
 		return false;
