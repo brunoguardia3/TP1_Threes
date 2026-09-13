@@ -6,7 +6,6 @@ public class Model {
 	private Tablero tablero;
 	private int puntuacion;
 	private int siguienteValor;
-	
 	private String sugerenciaActual;
 	private final String[] listaSugerencias = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
