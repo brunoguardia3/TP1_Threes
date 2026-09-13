@@ -1,15 +1,17 @@
 package interfaz;
 
-
 import juego.Model;
 
 import juego.Ficha;
+
 import juego.Tablero;
 
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.*;
 
 import java.awt.*;
+
 import java.awt.BorderLayout;
 
 import java.awt.Color;
