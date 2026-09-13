@@ -16,7 +16,7 @@ import java.awt.BorderLayout;
 
 import java.awt.Color;
 
-@SuppressWarnings("serial") // La declaración de la clase agregaba un warning del tipo serialID, por lo que suprimimosq el warning sin ensuciar el código principal
+@SuppressWarnings("serial") 
 public class ThreesGUI extends JFrame{
 	private JPanel contentPane;
 	private JPanel panelGrilla;
@@ -24,7 +24,7 @@ public class ThreesGUI extends JFrame{
 
 	private JButton izqButton,derButton,arribaButton,abajoButton, resetButton;
 
-	// Elementos para los objetivos opcionales y estado
+	
 	private JLabel lblPuntaje;
 	private JLabel lblSiguienteFicha;
 	private JLabel lblSugerencia;
@@ -34,7 +34,7 @@ public class ThreesGUI extends JFrame{
 	Model model = new Model();
 
 	public ThreesGUI()  { 
-		// Configuración básica de la ventana (Respeta el límite de 1366 x 768)
+		
 		setTitle("Threes! - Trabajo Práctico");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 784); 
@@ -46,7 +46,7 @@ public class ThreesGUI extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 15));
 
-		// --- PANEL SUPERIOR: Información (Puntaje y Siguiente ficha) ---
+		
 		JPanel panelInfo = new JPanel();
 		panelInfo.setOpaque(false);
 		contentPane.add(panelInfo, BorderLayout.NORTH);
@@ -61,16 +61,16 @@ public class ThreesGUI extends JFrame{
 		lblSiguienteFicha.setFont(new Font("Arial", Font.BOLD, 18));
 		panelInfo.add(lblSiguienteFicha);
 
-		// --- PANEL CENTRAL: Grilla 4x4 ---
+		
 		panelGrilla = new JPanel();
 		panelGrilla.setBackground(new Color(200, 200, 200));
 		panelGrilla.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPane.add(panelGrilla, BorderLayout.CENTER);
 
-		// El GridLayout de 4 filas x 4 columnas, con 10px de separación entre celdas
+		
 		panelGrilla.setLayout(new GridLayout(4, 4, 10, 10)); 
 
-		// Inicializamos la matriz de etiquetas (JLabels) para las 16 celdas
+		
 		casillas = new JLabel[4][4];
 
 		for (int fila = 0; fila < 4; fila++) {
@@ -92,43 +92,43 @@ public class ThreesGUI extends JFrame{
 		panelInferior.setLayout(new BorderLayout(0, 10)); // Separación de 10px vertical
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-		// 1. Etiqueta de sugerencias (Arriba en el panel inferior)
+		
 		lblSugerencia = new JLabel("Sugerencia de jugada: (Ninguna)");
 		lblSugerencia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSugerencia.setFont(new Font("Arial", Font.ITALIC, 14));
 		panelInferior.add(lblSugerencia, BorderLayout.NORTH);
 
-		// 2. Contenedor para que la botonera no ocupe todo el ancho de la pantalla
+		
 		JPanel contenedorBotonera = new JPanel();
 		contenedorBotonera.setOpaque(false);
 		panelInferior.add(contenedorBotonera, BorderLayout.CENTER);
 
-		// 3. Panel de la Botonera (Grilla 3x3 para forma de cruceta)
+		
 		JPanel panelBotones = new JPanel();
-		panelBotones.setLayout(new GridLayout(3, 3, 5, 5)); // 3 filas, 3 columnas, 5px de gap
+		panelBotones.setLayout(new GridLayout(3, 3, 5, 5)); 
 		contenedorBotonera.add(panelBotones);
 		resetButton = new JButton("Reiniciar");
 		resetButton.setVisible(false);
 		resetButton.addActionListener(e -> reiniciarPartida());
 		panelInferior.add(resetButton, BorderLayout.SOUTH);
 
-		// Inicializar los botones que ya tenías declarados
+		
 		arribaButton = new JButton("↑");
 		izqButton = new JButton("←");
 		derButton = new JButton("→");
 		abajoButton = new JButton("↓");
 
-		// Fila 1 de la grilla (Vacío, Arriba, Vacío)
+		
 		panelBotones.add(new JLabel(""));
 		panelBotones.add(arribaButton);
 		panelBotones.add(new JLabel(""));
 
-		// Fila 2 de la grilla (Izquierda, Vacío, Derecha)
+		
 		panelBotones.add(izqButton);
 		panelBotones.add(new JLabel("")); 
 		panelBotones.add(derButton);
 
-		// Fila 3 de la grilla (Vacío, Abajo, Vacío)
+		
 		panelBotones.add(new JLabel(""));
 		panelBotones.add(abajoButton);
 		panelBotones.add(new JLabel(""));
@@ -137,7 +137,7 @@ public class ThreesGUI extends JFrame{
 		configurarEventosTeclado();
 		actualizarPantalla();
 
-		// Esto es clave para que la ventana pueda detectar los eventos del teclado (las flechas)
+		
 		setFocusable(true);
 		requestFocusInWindow();
 	}
@@ -160,35 +160,23 @@ public class ThreesGUI extends JFrame{
 
 
 
-	// =========================================================================
-	// MÉTODOS PÚBLICOS PARA QUE EL CONTROLADOR ACTUALICE LA VISTA
-	// =========================================================================
-
-	/**
-	 * Actualiza el valor visual de una celda específica.
-	 */
+	
 	public void actualizarCelda(int fila, int columna, String valor, Color colorFondo) {
 		casillas[fila][columna].setText(valor);
 		casillas[fila][columna].setBackground(colorFondo);
 	}
 
-	/**
-	 * Actualiza el puntaje en la interfaz.
-	 */
+	
 	public void actualizarPuntaje() {
 		lblPuntaje.setText("Puntaje: " + model.getPuntuacion());
 	}
 
-	/**
-	 * Muestra la siguiente ficha (Objetivo opcional 1).
-	 */
+	
 	public void mostrarSiguienteFicha() {
 		lblSiguienteFicha.setText("Siguiente: " + model.getSiguienteValor());
 	}
 
-	/**
-	 * Muestra una sugerencia al usuario (Objetivo opcional 3).
-	 */
+	
 	public void mostrarSugerencia(String sugerencia) {
 		lblSugerencia.setText("<html><center>Sugerencia: <br>" + sugerencia + "</center></html>");
 	}
