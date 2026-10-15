@@ -33,10 +33,6 @@ public class Model {
 		this.sugerenciaActual = generarSugerenciaAleatoria();
 	}
 
-	public Tablero getTablero() {
-		return tablero;
-	}
-
 	public int getPuntuacion() {
 		return this.puntuacion = tablero.getPuntajeTotal();
 	}
@@ -193,5 +189,17 @@ public class Model {
 			return true;
 		}
 		return false;
+	}
+	
+	public int[][] getValoresGrilla() {
+	    int largo = tablero.getLargoTablero();
+	    int[][] valores = new int[largo][largo];
+	    for (int i = 0; i < largo; i++) {
+	        for (int j = 0; j < largo; j++) {
+	            Ficha ficha = tablero.obtenerFicha(i, j);
+	            valores[i][j] = (ficha != null) ? ficha.getValor() : 0;
+	        }
+	    }
+	    return valores;
 	}
 }

@@ -2,10 +2,6 @@ package interfaz;
 
 import juego.Model;
 
-import juego.Ficha;
-
-import juego.Tablero;
-
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.*;
@@ -251,13 +247,12 @@ public class ThreesGUI extends JFrame{
 	}
 
 	public void actualizarPantalla() {
-		Tablero tablero= model.getTablero();
+		int[][] valoresGrilla = model.getValoresGrilla();
 
-		for(int fila=0;fila<tablero.getLargoTablero();fila++) {
-			for(int col=0; col < tablero.getLargoTablero();col++) {
-				Ficha ficha= tablero.obtenerFicha(fila, col);
+		for(int fila=0;fila < valoresGrilla.length;fila++) {
+			for(int col=0; col < valoresGrilla[fila].length;col++) {
 
-				int valor=(ficha != null) ? ficha.getValor() : 0;
+				int valor= valoresGrilla[fila][col];
 
 				String texto = (valor == 0) ? "" : String.valueOf(valor);
 				Color colorFondo = obtenerColorPorValor(valor);
