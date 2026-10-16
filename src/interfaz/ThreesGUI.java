@@ -222,14 +222,6 @@ public class ThreesGUI extends JFrame{
 		}
 	}
 
-	private void verificarJuegoGanado() {
-		if (!finMostrado && model.isJuegoGanado()) {
-			mostrarCartelGanador();
-			juegoGanado = true;
-		}
-
-	}
-
 	private void reiniciarPartida() {
 		model.reiniciarJuego();
 		finMostrado=false;
@@ -273,7 +265,6 @@ public class ThreesGUI extends JFrame{
 		mostrarSiguienteFicha();
 		actualizarPuntaje();
 		verificarFinJuego();
-		verificarJuegoGanado();
 	}
 
 	public void mostrarFinJuego() {
@@ -291,22 +282,6 @@ public class ThreesGUI extends JFrame{
 			getRootPane().requestFocus();
 		});
 	}   
-	
-	public void mostrarCartelGanador() {
-        resetButton.setVisible(true);
-        resetButton.requestFocusInWindow();
-        JOptionPane.showMessageDialog(this,
-            "¡Felicidades! ¡Ganaste el juego al llegar a 500 puntos!",
-            "Juego Terminado",
-            JOptionPane.INFORMATION_MESSAGE);
-        SwingUtilities.invokeLater(() -> {
-            setFocusable(true);
-            toFront();
-            requestFocus();
-            requestFocusInWindow();
-            getRootPane().requestFocus();
-        });
-        
-    }
+
 }
 

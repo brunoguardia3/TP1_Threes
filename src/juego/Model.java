@@ -1,6 +1,7 @@
 package juego;
 
 import java.util.Random;
+import java.math.*;
 
 public class Model {
 	private Tablero tablero;
@@ -10,32 +11,32 @@ public class Model {
 	private Direccion direccion;
 	private final String[] listaSugerencias = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
-		    "Elegí una dirección 'prohibida' (como arriba) y evitá usarla para no desarmar tu esquina.",
-		    "Prestá mucha atención a la próxima ficha; te permite planear un paso por adelantado.",
-		    "Los números 1 y 2 ocupan espacio vital, ¡tratá de fusionarlos ni bien aparezcan!",
-		    "Intentá alinear tus fichas en orden (de mayor a menor) para facilitar fusiones en cadena.",
-		    "Evitá que las fichas de valor bajo (1, 2 o 3) queden atrapadas entre fichas gigantes.",
-		    "Tu prioridad número uno siempre debe ser mantener la mayor cantidad de celdas vacías posibles.",
-		    "Pensá tus movimientos en cascada: un 3 forma un 6, que luego forma un 12...",
-		    "Mover todo hacia una esquina es mucho más seguro que dejar las fichas grandes en el centro.",
-		    "La paciencia es clave; a veces es mejor postergar una fusión si eso rompe tu estructura.",
-		    "Agrupá las fichas medianas cerca de tu ficha más grande para alimentarla rápidamente.",
-		    "Si el tablero se llena mucho, enfocate exclusivamente en hacer fusiones chicas para liberar espacio.",
-		    "No te apures en deslizar. Evaluá si un movimiento te va a bloquear futuros emparejamientos.",
-		    "Intentá que las nuevas fichas nazcan en la zona donde tenés los números más bajos.",
-		    "Mantener un patrón de 'serpiente' con tus valores más altos te asegura llegar lejos."
+			"Elegí una dirección 'prohibida' (como arriba) y evitá usarla para no desarmar tu esquina.",
+			"Prestá mucha atención a la próxima ficha; te permite planear un paso por adelantado.",
+			"Los números 1 y 2 ocupan espacio vital, ¡tratá de fusionarlos ni bien aparezcan!",
+			"Intentá alinear tus fichas en orden (de mayor a menor) para facilitar fusiones en cadena.",
+			"Evitá que las fichas de valor bajo (1, 2 o 3) queden atrapadas entre fichas gigantes.",
+			"Tu prioridad número uno siempre debe ser mantener la mayor cantidad de celdas vacías posibles.",
+			"Pensá tus movimientos en cascada: un 3 forma un 6, que luego forma un 12...",
+			"Mover todo hacia una esquina es mucho más seguro que dejar las fichas grandes en el centro.",
+			"La paciencia es clave; a veces es mejor postergar una fusión si eso rompe tu estructura.",
+			"Agrupá las fichas medianas cerca de tu ficha más grande para alimentarla rápidamente.",
+			"Si el tablero se llena mucho, enfocate exclusivamente en hacer fusiones chicas para liberar espacio.",
+			"No te apures en deslizar. Evaluá si un movimiento te va a bloquear futuros emparejamientos.",
+			"Intentá que las nuevas fichas nazcan en la zona donde tenés los números más bajos.",
+			"Mantener un patrón de 'serpiente' con tus valores más altos te asegura llegar lejos."
 	};
 
 	public Model() {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
 		this.siguienteValor = generarNumeroAleatoria();
-		
+
 		this.sugerenciaActual = generarSugerenciaAleatoria();
 	}
 
 	public int getPuntuacion() {
-		return this.puntuacion = tablero.getPuntajeTotal();
+		return this.puntuacion;
 	}
 
 	public int getSiguienteValor() {
@@ -45,36 +46,40 @@ public class Model {
 	public void setPuntuacion(int nuevaPuntuacion) {
 		this.puntuacion = nuevaPuntuacion;
 	}
-	
+
 	public String getSugerenciaActual() {
 		return sugerenciaActual; 
+	}
+
+	public int formulaPuntaje(int valorFicha) {
+		return (int) Math.pow(3, Math.log((valorFicha/3)+1) / Math.log(2));
 	}
 
 	public void reiniciarJuego() {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
-		
+
 		this.sugerenciaActual = generarSugerenciaAleatoria();
 
 	}
 	public void moverDerecha() {
 		tablero.moverDerecha();
-		generarFichaAleatoria(direccion.DERECHA);
+		generarFichaAleatoria(Direccion.DERECHA);
 	}
 
 	public void moverIzquierda() {
 		tablero.moverIzquierda();
-		generarFichaAleatoria(direccion.IZQUIERDA);
+		generarFichaAleatoria(Direccion.IZQUIERDA);
 	}
 
 	public void moverArriba() {
 		tablero.moverArriba();
-		generarFichaAleatoria(direccion.ARRIBA);
+		generarFichaAleatoria(Direccion.ARRIBA);
 	}
 
 	public void moverAbajo() {
 		tablero.moverAbajo();
-		generarFichaAleatoria(direccion.ABAJO);
+		generarFichaAleatoria(Direccion.ABAJO);
 	}
 
 	private int generarNumeroAleatoria() {
@@ -149,19 +154,20 @@ public class Model {
 
 		}
 	}
-	
-	
+
+
 	private String generarSugerenciaAleatoria() {
-	    Random random = new Random();
-	    int indice = random.nextInt(listaSugerencias.length);
-	    return listaSugerencias[indice];
+		Random random = new Random();
+		int indice = random.nextInt(listaSugerencias.length);
+		return listaSugerencias[indice];
 	}
-	
+
 	public void actualizarSugerenciaAleatoria() {
 		this.sugerenciaActual = generarSugerenciaAleatoria();
 	}
 
 	public boolean isJuegoTerminado() {
+
 		if (tablero.getCantidadDeFichasPresentes() < 16) {
 			return false;
 		}
@@ -181,26 +187,36 @@ public class Model {
 			}
 		}
 
-
 		return sinCombinacionesVerticales && sinCombinacionesHorizontales;
 	}
-
-	public boolean isJuegoGanado() {
-		if(this.puntuacion>=500) {
-			return true;
-		}
-		return false;
-	}
 	
+	private void puntajeTotal() {
+		int puntajeAux = 0;
+		for(int fila = 0; fila <tablero.getLargoTablero(); fila++) {
+
+			for(int col = 0; col < tablero.getLargoTablero(); col++) {
+
+				Ficha fichaAux = tablero.obtenerFicha(fila, col);
+				if(fichaAux == null) {
+					return;
+				}
+				if(fichaAux.getValor() >= 3)
+					puntajeAux+= formulaPuntaje(fichaAux.getValor());
+
+			}
+		}
+		this.puntuacion = puntajeAux;
+	}
+
 	public int[][] getValoresGrilla() {
-	    int largo = tablero.getLargoTablero();
-	    int[][] valores = new int[largo][largo];
-	    for (int i = 0; i < largo; i++) {
-	        for (int j = 0; j < largo; j++) {
-	            Ficha ficha = tablero.obtenerFicha(i, j);
-	            valores[i][j] = (ficha != null) ? ficha.getValor() : 0;
-	        }
-	    }
-	    return valores;
+		int largo = tablero.getLargoTablero();
+		int[][] valores = new int[largo][largo];
+		for (int i = 0; i < largo; i++) {
+			for (int j = 0; j < largo; j++) {
+				Ficha ficha = tablero.obtenerFicha(i, j);
+				valores[i][j] = (ficha != null) ? ficha.getValor() : 0;
+			}
+		}
+		return valores;
 	}
 }

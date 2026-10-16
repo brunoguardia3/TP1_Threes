@@ -3,7 +3,6 @@ package juego;
 public class Tablero {
 	private int cantidadDeFichas;
 	private Ficha[][] matrizDeTablero;
-	private int puntajeTotal;
 
 	public Tablero() {
 		this.matrizDeTablero = new Ficha[4][4];
@@ -16,10 +15,6 @@ public class Tablero {
 
 	public int getLargoTablero() {
 		return matrizDeTablero.length;
-	}
-
-	public int getPuntajeTotal() {
-		return this.puntajeTotal;
 	}
 
 	public void incrementarCantidadFichas() {
@@ -55,53 +50,39 @@ public class Tablero {
 	}
 
 	public void moverDerecha() {
-
 		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
 			for (int col = getLargoTablero() - 2; col >= 0; col--) {
-
 				procesarMovimiento(fila, col, fila, col+1);
 			}
 		}
 	}
 
 	public void moverIzquierda() {
-
 		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
 			for (int col = 1; col < getLargoTablero(); col++) {
-
 				procesarMovimiento(fila, col, fila, col-1);
 			}
 		}
 	}
 
 	public void moverArriba() {
-
 		for (int fila = 1; fila < getLargoTablero(); fila++) {
 
 			for (int col = 0; col < getLargoTablero(); col++) {
-
 				procesarMovimiento(fila, col, fila-1, col);
 			}
 		}
 	}
 
 	public void moverAbajo() {
-
 		for (int fila = getLargoTablero() - 2; fila >= 0; fila--) {
 
 			for (int col = 0; col < getLargoTablero(); col++) {
-
 				procesarMovimiento(fila, col, fila+1, col);
 			}
 		}
-	}
-
-
-	private void calcularPuntuacion(int valorFicha1, int valorFicha2) {
-		int suma = valorFicha1 + valorFicha2;
-		puntajeTotal+=suma;
 	}
 
 	public boolean sePuedeFusionar(Ficha ficha1, Ficha ficha2) {
@@ -121,17 +102,15 @@ public class Tablero {
 		}
 	}
 
-	private void combinarFichas(int filaFichaOrigen, int columFichaOrigen, int filaFichaDestino, int columFichaDestino) {
+	private void combinarFichas(int filaFicha1, int columFicha1, int filaFicha2, int columFicha2) {
 		// usamos las coordenadas de los parametros para saber el valor de las fichas
-		Ficha fichaOrigen = matrizDeTablero[filaFichaOrigen][columFichaOrigen];
-		Ficha fichaDestino = matrizDeTablero[filaFichaDestino][columFichaDestino];
-
+		Ficha fichaOrigen = matrizDeTablero[filaFicha1][columFicha1];
+		Ficha fichaDestino = matrizDeTablero[filaFicha2][columFicha2];
+	
 		if (sePuedeFusionar(fichaDestino, fichaOrigen)) {
-			calcularPuntuacion(fichaDestino.getValor(), fichaOrigen.getValor());
-			int nuevoValorFicha = fichaDestino.getValor() + fichaOrigen.getValor();
-			fichaDestino.setValor(nuevoValorFicha);
-
-			matrizDeTablero[filaFichaOrigen][columFichaOrigen] = null;
+			matrizDeTablero[filaFicha1][columFicha1] = null;
+			matrizDeTablero[filaFicha2][columFicha2] = null;
+			agregarFicha(filaFicha2, columFicha2, new Ficha(fichaDestino.getValor() + fichaOrigen.getValor()));
 
 			this.cantidadDeFichas--;
 
