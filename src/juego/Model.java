@@ -104,7 +104,7 @@ public class Model {
 		int borde = tablero.getLargoTablero() - 1;
 
 		// Se Busca celdas vacías en el borde contrario al movimiento
-		if (direccion == Direccion.DERECHA) {
+		if (direccion.equals(Direccion.DERECHA)) {
 			for (int fila = 0; fila <= borde; fila++) {
 				if (tablero.obtenerFicha(fila, 0) == null) {
 					posFilasVacias[cantCeldasVacias] = fila;
@@ -112,7 +112,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion == Direccion.IZQUIERDA) {
+		} else if (direccion.equals(Direccion.IZQUIERDA)) {
 			for (int fila = 0; fila <= borde; fila++) {
 				if (tablero.obtenerFicha(fila, borde) == null) {
 					posFilasVacias[cantCeldasVacias] = fila;
@@ -120,7 +120,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion == Direccion.ARRIBA) {
+		} else if (direccion.equals(Direccion.ARRIBA)) {
 			for (int col = 0; col <= borde; col++) {
 				if (tablero.obtenerFicha(borde, col) == null) {
 					posFilasVacias[cantCeldasVacias] = borde;
@@ -128,7 +128,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion == Direccion.ABAJO) {
+		} else if (direccion.equals(Direccion.ABAJO)) {
 			for (int col = 0; col <= borde; col++) {
 				if (tablero.obtenerFicha(0, col) == null) {
 					posFilasVacias[cantCeldasVacias] = 0;
