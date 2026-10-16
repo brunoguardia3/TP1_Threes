@@ -8,7 +8,7 @@ public class Model {
 	private int puntuacion;
 	private int siguienteValor;
 	private String sugerenciaActual;
-	private Direccion direccion;
+
 	private final String[] listaSugerencias = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
 			"Elegí una dirección 'prohibida' (como arriba) y evitá usarla para no desarmar tu esquina.",
@@ -174,7 +174,7 @@ public class Model {
 
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
-
+		
 		for (int i = 0; i < tablero.getLargoTablero() - 1; i++) {
 			for (int j = 0; j < tablero.getLargoTablero(); j++) {
 				sinCombinacionesVerticales = sinCombinacionesVerticales && !tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i + 1, j));				
@@ -186,7 +186,7 @@ public class Model {
 				sinCombinacionesHorizontales = sinCombinacionesHorizontales && !tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i, j + 1));		
 			}
 		}
-
+		
 		return sinCombinacionesVerticales && sinCombinacionesHorizontales;
 	}
 	
