@@ -31,7 +31,6 @@ public class Model {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
 		this.siguienteValor = generarNumeroAleatoria();
-
 		this.sugerenciaActual = generarSugerenciaAleatoria();
 	}
 
@@ -52,7 +51,7 @@ public class Model {
 	}
 
 	public int formulaPuntaje(int valorFicha) {
-		return (int) Math.pow(3, Math.log((valorFicha/3)+1) / Math.log(2));
+		return (int) Math.pow(3, (Math.log(valorFicha/3) / Math.log(2)) + 1);
 	}
 
 	public void reiniciarJuego() {
@@ -174,7 +173,7 @@ public class Model {
 
 		boolean sinCombinacionesVerticales = true;
 		boolean sinCombinacionesHorizontales = true;
-		
+
 		for (int i = 0; i < tablero.getLargoTablero() - 1; i++) {
 			for (int j = 0; j < tablero.getLargoTablero(); j++) {
 				sinCombinacionesVerticales = sinCombinacionesVerticales && !tablero.sePuedeFusionar(tablero.obtenerFicha(i, j), tablero.obtenerFicha(i + 1, j));				
@@ -187,25 +186,26 @@ public class Model {
 			}
 		}
 		
+		if(sinCombinacionesVerticales && sinCombinacionesHorizontales) {
+			puntajeTotal();
+		}
+
 		return sinCombinacionesVerticales && sinCombinacionesHorizontales;
 	}
-	
+
 	private void puntajeTotal() {
-		int puntajeAux = 0;
+
 		for(int fila = 0; fila <tablero.getLargoTablero(); fila++) {
 
 			for(int col = 0; col < tablero.getLargoTablero(); col++) {
 
 				Ficha fichaAux = tablero.obtenerFicha(fila, col);
-				if(fichaAux == null) {
-					return;
-				}
+
 				if(fichaAux.getValor() >= 3)
-					puntajeAux+= formulaPuntaje(fichaAux.getValor());
+					this.puntuacion+=formulaPuntaje(fichaAux.getValor());
 
 			}
 		}
-		this.puntuacion = puntajeAux;
 	}
 
 	public int[][] getValoresGrilla() {
