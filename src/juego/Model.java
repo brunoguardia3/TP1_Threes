@@ -7,6 +7,7 @@ public class Model {
 	private int puntuacion;
 	private int siguienteValor;
 	private String sugerenciaActual;
+	private Direccion direccion;
 	private final String[] listaSugerencias = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
 		    "Elegí una dirección 'prohibida' (como arriba) y evitá usarla para no desarmar tu esquina.",
@@ -58,22 +59,22 @@ public class Model {
 	}
 	public void moverDerecha() {
 		tablero.moverDerecha();
-		generarFichaAleatoria("derecha");
+		generarFichaAleatoria(direccion.DERECHA);
 	}
 
 	public void moverIzquierda() {
 		tablero.moverIzquierda();
-		generarFichaAleatoria("izquierda");
+		generarFichaAleatoria(direccion.IZQUIERDA);
 	}
 
 	public void moverArriba() {
 		tablero.moverArriba();
-		generarFichaAleatoria("arriba");
+		generarFichaAleatoria(direccion.ARRIBA);
 	}
 
 	public void moverAbajo() {
 		tablero.moverAbajo();
-		generarFichaAleatoria("abajo");
+		generarFichaAleatoria(direccion.ABAJO);
 	}
 
 	private int generarNumeroAleatoria() {
@@ -88,7 +89,7 @@ public class Model {
 		return nroAleatoria;
 	}
 
-	public void generarFichaAleatoria(String direccion) {
+	public void generarFichaAleatoria(Direccion direccion) {
 		Random random = new Random();
 
 		int[] posFilasVacias = new int[4];
@@ -99,7 +100,7 @@ public class Model {
 		int borde = tablero.getLargoTablero() - 1;
 
 		// Se Busca celdas vacías en el borde contrario al movimiento
-		if (direccion.equals("derecha")) {
+		if (direccion == Direccion.DERECHA) {
 			for (int fila = 0; fila <= borde; fila++) {
 				if (tablero.obtenerFicha(fila, 0) == null) {
 					posFilasVacias[cantCeldasVacias] = fila;
@@ -107,7 +108,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion.equals("izquierda")) {
+		} else if (direccion == Direccion.IZQUIERDA) {
 			for (int fila = 0; fila <= borde; fila++) {
 				if (tablero.obtenerFicha(fila, borde) == null) {
 					posFilasVacias[cantCeldasVacias] = fila;
@@ -115,7 +116,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion.equals("arriba")) {
+		} else if (direccion == Direccion.ARRIBA) {
 			for (int col = 0; col <= borde; col++) {
 				if (tablero.obtenerFicha(borde, col) == null) {
 					posFilasVacias[cantCeldasVacias] = borde;
@@ -123,7 +124,7 @@ public class Model {
 					cantCeldasVacias++;
 				}
 			}
-		} else if (direccion.equals("abajo")) {
+		} else if (direccion == Direccion.ABAJO) {
 			for (int col = 0; col <= borde; col++) {
 				if (tablero.obtenerFicha(0, col) == null) {
 					posFilasVacias[cantCeldasVacias] = 0;

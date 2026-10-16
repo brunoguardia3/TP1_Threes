@@ -10,71 +10,68 @@ public class Tablero {
 		// Fichas iniciales
 		agregarFicha(1, 1, new Ficha(1));
 		agregarFicha(2, 2, new Ficha(2));
-		
+
 		this.cantidadDeFichas = 2;
 	}
 
 	public int getLargoTablero() {
 		return matrizDeTablero.length;
 	}
-	
+
 	public int getPuntajeTotal() {
 		return this.puntajeTotal;
 	}
-	
+
 	public void incrementarCantidadFichas() {
 		this.cantidadDeFichas++;
 
 	}
-	
+
 	public Ficha obtenerFicha(int i, int j) {
 		return matrizDeTablero[i][j];
 	}
-	
+
 	public int getCantidadDeFichasPresentes() {
 		return this.cantidadDeFichas;
 	}
-	
+
 	public void agregarFicha(int fila, int columna, Ficha ficha) {
 
 		this.matrizDeTablero[fila][columna] = ficha;
 	}
-	
+	public void validacionDe(Enum<Direccion> direccion) {
+
+	}
+
+	private void procesarMovimiento(int filaActual, int colActual, int nuevaFila, int nuevaCol) {
+		if (matrizDeTablero[filaActual][colActual] != null) {
+			if (matrizDeTablero[nuevaFila][nuevaCol] == null) {
+				matrizDeTablero[nuevaFila][nuevaCol] = matrizDeTablero[filaActual][colActual];
+				matrizDeTablero[filaActual][colActual] = null;
+			} else {
+				combinarFichas(filaActual, colActual, nuevaFila, nuevaCol);
+			}
+		}
+	}
+
 	public void moverDerecha() {
 
 		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
 			for (int col = getLargoTablero() - 2; col >= 0; col--) {
 
-				if (matrizDeTablero[fila][col] != null) {
-
-					if (matrizDeTablero[fila][col + 1] == null) {
-						matrizDeTablero[fila][col + 1] = matrizDeTablero[fila][col];
-						matrizDeTablero[fila][col] = null;
-					} else {
-						
-						combinarFichas(fila, col, fila, col + 1);
-					}
-				}
+				procesarMovimiento(fila, col, fila, col+1);
 			}
 		}
 	}
 
 	public void moverIzquierda() {
-	
+
 		for (int fila = 0; fila < getLargoTablero(); fila++) {
 
 			for (int col = 1; col < getLargoTablero(); col++) {
 
-				if (matrizDeTablero[fila][col] != null) {
-
-					if (matrizDeTablero[fila][col - 1] == null) {
-						matrizDeTablero[fila][col - 1] = matrizDeTablero[fila][col];
-						matrizDeTablero[fila][col] = null;
-					} else {
-						combinarFichas(fila, col, fila, col - 1);
-					}
-				}
+				procesarMovimiento(fila, col, fila, col-1);
 			}
 		}
 	}
@@ -85,45 +82,28 @@ public class Tablero {
 
 			for (int col = 0; col < getLargoTablero(); col++) {
 
-				if (matrizDeTablero[fila][col] != null) {
-
-					if (matrizDeTablero[fila - 1][col] == null) {
-						matrizDeTablero[fila - 1][col] = matrizDeTablero[fila][col];
-						matrizDeTablero[fila][col] = null;
-					} else {
-						combinarFichas(fila, col, fila - 1, col);
-					}
-				}
+				procesarMovimiento(fila, col, fila-1, col);
 			}
 		}
 	}
 
 	public void moverAbajo() {
-	
+
 		for (int fila = getLargoTablero() - 2; fila >= 0; fila--) {
 
 			for (int col = 0; col < getLargoTablero(); col++) {
 
-				if (matrizDeTablero[fila][col] != null) {
-
-					if (matrizDeTablero[fila + 1][col] == null) {
-						matrizDeTablero[fila + 1][col] = matrizDeTablero[fila][col];
-						matrizDeTablero[fila][col] = null;
-					} else {
-						
-						combinarFichas(fila, col, fila + 1, col);
-					}
-				}
+				procesarMovimiento(fila, col, fila+1, col);
 			}
 		}
 	}
 
-	
+
 	private void calcularPuntuacion(int valorFicha1, int valorFicha2) {
 		int suma = valorFicha1 + valorFicha2;
 		puntajeTotal+=suma;
 	}
-	
+
 	public boolean sePuedeFusionar(Ficha ficha1, Ficha ficha2) {
 		if (ficha1 == null | ficha2 == null) {
 			return false;
@@ -154,8 +134,8 @@ public class Tablero {
 			matrizDeTablero[filaFichaOrigen][columFichaOrigen] = null;
 
 			this.cantidadDeFichas--;
-			
-			
+
+
 		}
 	}
 
