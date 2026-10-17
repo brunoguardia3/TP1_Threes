@@ -3,6 +3,7 @@ package juego;
 public class Tablero {
 	private int cantidadDeFichas;
 	private Ficha[][] matrizDeTablero;
+	private boolean huboFusionParaPista = false;
 
 	public Tablero() {
 		this.matrizDeTablero = new Ficha[4][4];
@@ -114,8 +115,16 @@ public class Tablero {
 
 			this.cantidadDeFichas--;
 
-
+			this.huboFusionParaPista = true;
 		}
+	}
+	
+	public boolean huboFusion() {
+		return this.huboFusionParaPista;
+	}
+	
+	public void resetearBanderaFusion() {
+		this.huboFusionParaPista = false;
 	}
 
 }

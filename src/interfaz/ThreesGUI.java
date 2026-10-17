@@ -21,7 +21,7 @@ public class ThreesGUI extends JFrame{
 	private JButton izqButton,derButton,arribaButton,abajoButton, resetButton;
 
 	
-	private JLabel lblPuntaje;
+	private JLabel lblPista;
 	private JLabel lblSiguienteFicha;
 	private JLabel lblSugerencia;
 	private boolean finMostrado = false, juegoGanado = false;
@@ -42,27 +42,24 @@ public class ThreesGUI extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 15));
 
-		
 		JPanel panelInfo = new JPanel();
 		panelInfo.setOpaque(false);
 		contentPane.add(panelInfo, BorderLayout.NORTH);
-		panelInfo.setLayout(new GridLayout(1, 2, 10, 0));
+		panelInfo.setLayout(new BorderLayout(10, 0));
 
-		lblPuntaje = new JLabel("Puntaje: 0");
-		lblPuntaje.setFont(new Font("Arial", Font.BOLD, 18));
-		panelInfo.add(lblPuntaje);
+		lblPista = new JLabel();
+		lblPista.setFont(new Font("Arial", Font.BOLD, 14));
+		panelInfo.add(lblPista, BorderLayout.CENTER);
 
 		lblSiguienteFicha = new JLabel("Siguiente: ");
 		lblSiguienteFicha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSiguienteFicha.setFont(new Font("Arial", Font.BOLD, 18));
-		panelInfo.add(lblSiguienteFicha);
-
+		panelInfo.add(lblSiguienteFicha, BorderLayout.EAST);
 		
 		panelGrilla = new JPanel();
 		panelGrilla.setBackground(new Color(200, 200, 200));
 		panelGrilla.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPane.add(panelGrilla, BorderLayout.CENTER);
-
 		
 		panelGrilla.setLayout(new GridLayout(4, 4, 10, 10)); 
 
@@ -151,11 +148,6 @@ public class ThreesGUI extends JFrame{
 		getRootPane().registerKeyboardAction(e -> moverFichaIzquierda(), KeyStroke.getKeyStroke("LEFT"), JComponent.WHEN_IN_FOCUSED_WINDOW);
 		getRootPane().registerKeyboardAction(e -> moverFichaDerecha(), KeyStroke.getKeyStroke("RIGHT"), JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
-
-
-
-
-
 	
 	public void actualizarCelda(int fila, int columna, String valor, Color colorFondo) {
 		casillas[fila][columna].setText(valor);
@@ -163,8 +155,8 @@ public class ThreesGUI extends JFrame{
 	}
 
 	
-	public void actualizarPuntaje() {
-		lblPuntaje.setText("Puntaje: " + model.getPuntuacion());
+	public void actualizarPista() {
+		lblPista.setText("Pista: ");
 	}
 
 	
@@ -263,7 +255,7 @@ public class ThreesGUI extends JFrame{
 		mostrarSugerencia(model.getSugerenciaActual());
 		
 		mostrarSiguienteFicha();
-		actualizarPuntaje();
+		lblPista.setText(model.getPistaActual());
 		verificarFinJuego();
 	}
 
