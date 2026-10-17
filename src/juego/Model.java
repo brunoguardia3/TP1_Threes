@@ -8,6 +8,8 @@ public class Model {
 	private int puntuacion;
 	private int siguienteValor;
 	private String sugerenciaActual;
+	private int movimientoSinFusion = 0;
+	private String pistaActual = "Pista: ?";
 
 	private final String[] listaSugerencias = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
@@ -37,6 +39,10 @@ public class Model {
 	public int getPuntuacion() {
 		return this.puntuacion;
 	}
+	
+	public String getPistaActual() {
+		return pistaActual;
+	}
 
 	public int getSiguienteValor() {
 		return siguienteValor;
@@ -59,26 +65,36 @@ public class Model {
 		this.puntuacion = 0;
 
 		this.sugerenciaActual = generarSugerenciaAleatoria();
+		
+		this.pistaActual = "Pista: ?";
 
 	}
 	public void moverDerecha() {
+		tablero.resetearBanderaFusion();
 		tablero.moverDerecha();
 		generarFichaAleatoria(Direccion.DERECHA);
+		analizarPista();
 	}
 
 	public void moverIzquierda() {
+		tablero.resetearBanderaFusion();
 		tablero.moverIzquierda();
 		generarFichaAleatoria(Direccion.IZQUIERDA);
+		analizarPista();
 	}
 
 	public void moverArriba() {
+		tablero.resetearBanderaFusion();
 		tablero.moverArriba();
 		generarFichaAleatoria(Direccion.ARRIBA);
+		analizarPista();
 	}
 
 	public void moverAbajo() {
+		tablero.resetearBanderaFusion();
 		tablero.moverAbajo();
 		generarFichaAleatoria(Direccion.ABAJO);
+		analizarPista();
 	}
 
 	private int generarNumeroAleatoria() {
@@ -218,5 +234,39 @@ public class Model {
 			}
 		}
 		return valores;
+	}
+	
+	public void analizarPista() {
+		if(tablero.huboFusion()) {
+			movimientoSinFusion = 0;
+			this.pistaActual = "Pista: ?";
+			return;
+		}else {
+			movimientoSinFusion++;
+		}
+		
+		if(movimientoSinFusion >= 3) {
+			//analizamos derecha e izquierda
+			for(int fila = 0; fila < tablero.getLargoTablero(); fila++) {
+				for(int col = 0; col < tablero.getLargoTablero() - 1; col++) {
+					if(tablero.sePuedeFusionar(tablero.obtenerFicha(fila, col), tablero.obtenerFicha(fila, col + 1))) {
+						this.pistaActual = "Pista: Tenes fichas a combinar hacia la IZQUIERDA o DERECHA.";
+						return;
+					}
+				}
+			}
+			//analizamos arriba y abajo
+			for(int col = 0; col < tablero.getLargoTablero(); col++) {
+				for(int fila = 0; fila < tablero.getLargoTablero() - 1; fila++) {
+					if(tablero.sePuedeFusionar(tablero.obtenerFicha(fila, col), tablero.obtenerFicha(fila + 1, col))) {
+						this.pistaActual = "Pista: Tenes fichas a combinar hacia ARRIBA o ABAJO.";
+						return;
+					}
+				}
+			}
+			movimientoSinFusion--;
+		}else {
+			this.pistaActual = "Pista: ?"; 
+		}
 	}
 }
