@@ -7,11 +7,11 @@ public class Model {
 	private Tablero tablero;
 	private int puntuacion;
 	private int siguienteValor;
-	private String sugerenciaActual;
+	private String consejoActual;
 	private int movimientoSinFusion = 0;
 	private String pistaActual = "Pista: ?";
 
-	private final String[] listaSugerencias = {
+	private final String[] listaConsejos = {
 			"Mantene tu ficha de mayor valor fija en una de las esquinas del tablero.",
 			"Elegí una dirección 'prohibida' (como arriba) y evitá usarla para no desarmar tu esquina.",
 			"Prestá mucha atención a la próxima ficha; te permite planear un paso por adelantado.",
@@ -33,7 +33,7 @@ public class Model {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
 		this.siguienteValor = generarNumeroAleatoria();
-		this.sugerenciaActual = generarSugerenciaAleatoria();
+		this.consejoActual = generarConsejoAleatoria();
 	}
 
 	public int getPuntuacion() {
@@ -52,8 +52,8 @@ public class Model {
 		this.puntuacion = nuevaPuntuacion;
 	}
 
-	public String getSugerenciaActual() {
-		return sugerenciaActual; 
+	public String getConsejoActual() {
+		return consejoActual; 
 	}
 
 	public int formulaPuntaje(int valorFicha) {
@@ -64,7 +64,7 @@ public class Model {
 		this.tablero = new Tablero();
 		this.puntuacion = 0;
 
-		this.sugerenciaActual = generarSugerenciaAleatoria();
+		this.consejoActual = generarConsejoAleatoria();
 		
 		this.pistaActual = "Pista: ?";
 
@@ -171,14 +171,14 @@ public class Model {
 	}
 
 
-	private String generarSugerenciaAleatoria() {
+	private String generarConsejoAleatoria() {
 		Random random = new Random();
-		int indice = random.nextInt(listaSugerencias.length);
-		return listaSugerencias[indice];
+		int indice = random.nextInt(listaConsejos.length);
+		return listaConsejos[indice];
 	}
 
-	public void actualizarSugerenciaAleatoria() {
-		this.sugerenciaActual = generarSugerenciaAleatoria();
+	public void actualizarConsejoAleatoria() {
+		this.consejoActual = generarConsejoAleatoria();
 	}
 
 	public boolean isJuegoTerminado() {

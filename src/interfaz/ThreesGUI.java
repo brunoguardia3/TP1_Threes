@@ -23,9 +23,9 @@ public class ThreesGUI extends JFrame{
 	
 	private JLabel lblPista;
 	private JLabel lblSiguienteFicha;
-	private JLabel lblSugerencia;
+	private JLabel lblConsejo;
 	private boolean finMostrado = false, juegoGanado = false;
-	private int contadorParaSiguienteSugerencia = 0;
+	private int contadorParaSiguienteConsejo = 0;
 	
 	Model model = new Model();
 
@@ -86,10 +86,10 @@ public class ThreesGUI extends JFrame{
 		contentPane.add(panelInferior, BorderLayout.SOUTH);
 
 		
-		lblSugerencia = new JLabel("Sugerencia de jugada: (Ninguna)");
-		lblSugerencia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSugerencia.setFont(new Font("Arial", Font.ITALIC, 14));
-		panelInferior.add(lblSugerencia, BorderLayout.NORTH);
+		lblConsejo = new JLabel("Consejo de jugada: (Ninguna)");
+		lblConsejo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConsejo.setFont(new Font("Arial", Font.ITALIC, 14));
+		panelInferior.add(lblConsejo, BorderLayout.NORTH);
 
 		
 		JPanel contenedorBotonera = new JPanel();
@@ -165,8 +165,8 @@ public class ThreesGUI extends JFrame{
 	}
 
 	
-	public void mostrarSugerencia(String sugerencia) {
-		lblSugerencia.setText("<html><center>Sugerencia: <br>" + sugerencia + "</center></html>");
+	public void mostrarConsejo(String consejo) {
+		lblConsejo.setText("<html><center>Consejo: <br>" + consejo + "</center></html>");
 	}
 
 	public void moverFichaDerecha() {
@@ -217,7 +217,7 @@ public class ThreesGUI extends JFrame{
 	private void reiniciarPartida() {
 		model.reiniciarJuego();
 		finMostrado=false;
-		contadorParaSiguienteSugerencia = 0;
+		contadorParaSiguienteConsejo = 0;
 		resetButton.setVisible(false);
 		actualizarPantalla();
 		requestFocusInWindow();
@@ -245,14 +245,14 @@ public class ThreesGUI extends JFrame{
 			}
 		}
 		
-		contadorParaSiguienteSugerencia++;
+		contadorParaSiguienteConsejo++;
 		
-		if(contadorParaSiguienteSugerencia > 10) {
-			contadorParaSiguienteSugerencia = 0;
-			model.actualizarSugerenciaAleatoria();
+		if(contadorParaSiguienteConsejo > 10) {
+			contadorParaSiguienteConsejo = 0;
+			model.actualizarConsejoAleatoria();
 		}
 		
-		mostrarSugerencia(model.getSugerenciaActual());
+		mostrarConsejo(model.getConsejoActual());
 		
 		mostrarSiguienteFicha();
 		lblPista.setText(model.getPistaActual());
